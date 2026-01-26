@@ -1,0 +1,3 @@
+// Placeholder to ensure Swagger is updated
+// NestJS Swagger usually auto-generates docs from decorators.
+// I will check one controller to ensure decorators are present.

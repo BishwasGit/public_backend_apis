@@ -1,0 +1,80 @@
+config:
+  target: "http://localhost:3000"
+  phases:
+    - duration: 60
+      arrivalRate: 5
+      name: "Warm up"
+    - duration: 120
+      arrivalRate: 10
+      name: "Sustained load"
+    - duration: 60
+      arrivalRate: 20
+      name: "Peak load"
+  processor: "./test-functions.js"
+
+scenarios:
+  - name: "User Login and Browse"
+    weight: 40
+    flow:
+      - post:
+          url: "/v1/auth/login"
+          json:
+            alias: "patient{{ $randomNumber(1, 20) }}"
+            pin: "1234"
+          capture:
+            - json: "$.access_token"
+              as: "token"
+      - get:
+          url: "/v1/profile/psychologists"
+          headers:
+            Authorization: "Bearer {{ token }}"
+      - think: 2
+
+  - name: "Browse and Book Session"
+    weight: 30
+    flow:
+      - post:
+          url: "/v1/auth/login"
+          json:
+            alias: "patient{{ $randomNumber(1, 20) }}"
+            pin: "1234"
+          capture:
+            - json: "$.access_token"
+              as: "token"
+      - get:
+          url: "/v1/profile/psychologists"
+          headers:
+            Authorization: "Bearer {{ token }}"
+      - get:
+          url: "/v1/wallet/balance"
+          headers:
+            Authorization: "Bearer {{ token }}"
+      - think: 3
+
+  - name: "Admin Dashboard"
+    weight: 20
+    flow:
+      - post:
+          url: "/v1/auth/login"
+          json:
+            alias: "admin1"
+            pin: "1234"
+          capture:
+            - json: "$.access_token"
+              as: "token"
+      - get:
+          url: "/v1/analytics/overview"
+          headers:
+            Authorization: "Bearer {{ token }}"
+      - get:
+          url: "/v1/analytics/revenue"
+          headers:
+            Authorization: "Bearer {{ token }}"
+      - think: 2
+
+  - name: "Public Browse"
+    weight: 10
+    flow:
+      - get:
+          url: "/v1/profile/psychologists"
+      - think: 1

@@ -1,0 +1,477 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// This model contains an expression index which requires additional setup for migrations. Visit https://pris.ly/d/expression-indexes for more info.
+model User {
+  id                      String              @id @default(uuid())
+  alias                   String              @unique
+  role                    Role
+  createdAt               DateTime            @default(now())
+  updatedAt               DateTime            @updatedAt
+  isVerified              Boolean             @default(false)
+  price                   Float?
+  hashedPin               String
+  bio                     String?
+  specialties             Json?
+  languages               Json?
+  demoMinutes             Int                 @default(0)
+  hourlyRate              Float?
+  isProfileVisible        Boolean             @default(false)
+  isOnline                Boolean             @default(false)
+  email                   String?             @unique
+  isEmailVerified         Boolean             @default(false)
+  isPhoneVerified         Boolean             @default(false)
+  phoneNumber             String?             @unique
+  dateOfBirth             DateTime?
+  hasAcceptedTerms        Boolean             @default(false)
+  gender                  String?
+  sexualOrientation       String?
+  profileImage            String? // Filename of profile image in private_uploads
+  deletedAt               DateTime?
+  failedLoginAttempts     Int                 @default(0)
+  lockoutUntil            DateTime?
+  notificationPreferences Json?
+  sessionTimeout          Int                 @default(30)
+  theme                   String              @default("light")
+  status                  String?             @default("ONLINE")
+  auditLogs               AuditLog[]
+  mediaFolders            MediaFolder[]
+  receivedMessages        Message[]           @relation("ReceivedMessages")
+  sentMessages            Message[]           @relation("SentMessages")
+  notifications           Notification[]
+  payoutMethods           PayoutMethod[]
+  serviceOptions          ServiceOption[]
+  attendedSessions        Session[]           @relation("PatientSessions")
+  hostedSessions          Session[]           @relation("PsychologistSessions")
+  participatingSessions   Session[]           @relation("SessionParticipants")
+  wallet                  Wallet?
+  reviewedWithdrawals     WithdrawalRequest[] @relation("ReviewedWithdrawals")
+  withdrawalRequests      WithdrawalRequest[] @relation("UserWithdrawals")
+  EventParticipants       EventParticipants[]
+  createdEvents           CalendarEvent[]     @relation("CreatedEvents")
+  givenReviews            Review[]            @relation("PatientReviews")
+  receivedReviews         Review[]            @relation("PsychologistReviews")
+
+  @@index([role])
+  @@index([isVerified])
+  @@index([email])
+  @@index([phoneNumber])
+  @@index([deletedAt])
+  @@index([createdAt])
+  @@index([isProfileVisible, isVerified])
+}
+
+model MediaFolder {
+  id             String      @id @default(uuid())
+  name           String
+  psychologistId String
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  files          MediaFile[]
+  psychologist   User        @relation(fields: [psychologistId], references: [id])
+
+  @@index([psychologistId])
+  @@index([createdAt])
+}
+
+model MediaFile {
+  id          String        @id @default(uuid())
+  filename    String
+  type        MediaType
+  folderId    String
+  isLocked    Boolean       @default(false)
+  unlockPrice Float?        @default(0)
+  createdAt   DateTime      @default(now())
+  folder      MediaFolder   @relation(fields: [folderId], references: [id], onDelete: Cascade)
+  unlockedBy  MediaUnlock[]
+}
+
+model MediaUnlock {
+  id        String    @id @default(uuid())
+  mediaId   String
+  patientId String
+  paidAt    DateTime  @default(now())
+  amount    Float
+  media     MediaFile @relation(fields: [mediaId], references: [id], onDelete: Cascade)
+
+  @@unique([mediaId, patientId])
+  @@index([patientId])
+}
+
+model Review {
+  id             String   @id @default(uuid())
+  sessionId      String
+  patientId      String
+  psychologistId String
+  rating         Int
+  comment        String
+  isHidden       Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  patient        User     @relation("PatientReviews", fields: [patientId], references: [id], onDelete: Cascade)
+  psychologist   User     @relation("PsychologistReviews", fields: [psychologistId], references: [id], onDelete: Cascade)
+  session        Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@index([psychologistId, isHidden])
+  @@index([sessionId])
+  @@index([createdAt])
+  @@map("reviews")
+}
+
+model CalendarEvent {
+  id                String              @id @default(uuid())
+  title             String
+  description       String?
+  startTime         DateTime
+  endTime           DateTime
+  type              EventType           @default(PERSONAL)
+  creatorId         String
+  sessionId         String?
+  location          String?
+  meetingLink       String?
+  isRecurring       Boolean             @default(false)
+  recurrence        String?
+  shareableLink     String?             @unique
+  reminders         Int[]
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  EventParticipants EventParticipants[]
+  creator           User                @relation("CreatedEvents", fields: [creatorId], references: [id], onDelete: Cascade)
+
+  @@index([creatorId, startTime])
+  @@index([startTime, endTime])
+  @@index([type])
+  @@index([sessionId])
+  @@map("calendar_events")
+}
+
+model ServiceOption {
+  id          String      @id @default(uuid())
+  userId      String
+  name        String
+  description String?
+  price       Float
+  duration    Int?
+  type        ServiceType
+  billingType BillingType @default(PER_SESSION)
+  isEnabled   Boolean     @default(true)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  deletedAt   DateTime?
+  user        User        @relation(fields: [userId], references: [id])
+
+  @@index([userId, isEnabled])
+  @@index([type])
+}
+
+model Wallet {
+  id           String        @id @default(uuid())
+  balance      Float         @default(0.0)
+  userId       String        @unique
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  transactions Transaction[]
+  user         User          @relation(fields: [userId], references: [id])
+}
+
+model Transaction {
+  id                String             @id @default(uuid())
+  walletId          String
+  amount            Float
+  type              TransactionType
+  status            TransactionStatus  @default(PENDING)
+  referenceId       String?
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  description       String?
+  wallet            Wallet             @relation(fields: [walletId], references: [id])
+  withdrawalRequest WithdrawalRequest?
+
+  @@index([walletId, createdAt])
+  @@index([type, status])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model Session {
+  id              String        @id @default(uuid())
+  psychologistId  String
+  patientId       String?
+  startTime       DateTime
+  endTime         DateTime
+  status          SessionStatus @default(SCHEDULED)
+  type            SessionType   @default(ONE_ON_ONE)
+  price           Float
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  patient         User?         @relation("PatientSessions", fields: [patientId], references: [id])
+  psychologist    User          @relation("PsychologistSessions", fields: [psychologistId], references: [id])
+  participants    User[]        @relation("SessionParticipants")
+  maxParticipants Int           @default(1)
+  title           String?
+  reviews         Review[]
+
+  @@index([psychologistId, status])
+  @@index([patientId, status])
+  @@index([status, startTime])
+  @@index([createdAt])
+}
+
+model AuditLog {
+  id        String      @id @default(uuid())
+  userId    String?
+  action    AuditAction
+  entity    AuditEntity
+  entityId  String
+  changes   Json?
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime    @default(now())
+  user      User?       @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([entity, entityId])
+  @@index([createdAt])
+}
+
+model WithdrawalRequest {
+  id                 String           @id @default(uuid())
+  userId             String
+  amount             Float
+  status             WithdrawalStatus @default(PENDING)
+  requestedAt        DateTime         @default(now())
+  reviewedAt         DateTime?
+  reviewedBy         String?
+  rejectionReason    String?
+  transactionId      String?          @unique
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+  paymentCompletedAt DateTime?
+  paymentProof       String?
+  paymentStatus      PaymentStatus    @default(PENDING)
+  reviewer           User?            @relation("ReviewedWithdrawals", fields: [reviewedBy], references: [id])
+  transaction        Transaction?     @relation(fields: [transactionId], references: [id])
+  user               User             @relation("UserWithdrawals", fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([status])
+  @@index([paymentStatus])
+  @@index([reviewedBy])
+}
+
+model Notification {
+  id        String           @id @default(uuid())
+  userId    String
+  title     String
+  message   String
+  type      NotificationType
+  isRead    Boolean          @default(false)
+  createdAt DateTime         @default(now())
+  user      User             @relation(fields: [userId], references: [id])
+
+  @@index([userId, isRead])
+  @@index([type])
+  @@index([createdAt])
+}
+
+model Message {
+  id         String   @id @default(uuid())
+  senderId   String
+  receiverId String
+  content    String
+  isRead     Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  receiver   User     @relation("ReceivedMessages", fields: [receiverId], references: [id])
+  sender     User     @relation("SentMessages", fields: [senderId], references: [id])
+
+  @@index([senderId, receiverId])
+  @@index([receiverId, isRead])
+  @@index([createdAt])
+}
+
+model PayoutMethod {
+  id        String     @id @default(uuid())
+  userId    String
+  type      PayoutType
+  details   Json
+  isDefault Boolean    @default(false)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  user      User       @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+}
+
+model Language {
+  id           String        @id @default(uuid())
+  code         String        @unique
+  name         String
+  isDefault    Boolean       @default(false)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  translations Translation[]
+}
+
+model Translation {
+  id         String   @id @default(uuid())
+  key        String
+  value      String
+  languageId String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  language   Language @relation(fields: [languageId], references: [id], onDelete: Cascade)
+
+  @@unique([languageId, key])
+  @@index([languageId])
+  @@index([key])
+}
+
+model EventParticipants {
+  A               String
+  B               String
+  calendar_events CalendarEvent @relation(fields: [A], references: [id], onDelete: Cascade)
+  User            User          @relation(fields: [B], references: [id], onDelete: Cascade)
+
+  @@unique([A, B], map: "_EventParticipants_AB_unique")
+  @@index([B], map: "_EventParticipants_B_index")
+  @@map("_EventParticipants")
+}
+
+enum Role {
+  PATIENT
+  PSYCHOLOGIST
+  ADMIN
+}
+
+enum MediaType {
+  IMAGE
+  VIDEO
+}
+
+enum TransactionType {
+  DEPOSIT
+  WITHDRAWAL
+  SESSION_RESERVE
+  SESSION_PAYMENT
+  REFUND
+  MEDIA_UNLOCK
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
+enum ServiceType {
+  VIDEO
+  AUDIO_ONLY
+  CHAT
+  GROUP
+}
+
+enum BillingType {
+  PER_SESSION
+  PER_MINUTE
+  BUNDLE_7_DAY
+}
+
+enum EventType {
+  SESSION
+  MEETING
+  REMINDER
+  PERSONAL
+}
+
+enum SessionStatus {
+  SCHEDULED
+  LIVE
+  COMPLETED
+  CANCELLED
+  PENDING
+}
+
+enum SessionType {
+  ONE_ON_ONE
+  GROUP
+}
+
+enum AuditAction {
+  CREATE
+  READ
+  UPDATE
+  DELETE
+  LOGIN
+  LOGOUT
+  VERIFY
+  APPROVE
+  REJECT
+  REFUND
+  SETTLE
+  UPLOAD
+  DOWNLOAD
+}
+
+enum AuditEntity {
+  USER
+  SESSION
+  TRANSACTION
+  WALLET
+  SERVICE_OPTION
+  DISPUTE
+  MEDIA_FOLDER
+  MEDIA_FILE
+  PROFILE
+}
+
+enum WithdrawalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  COMPLETED
+}
+
+enum PaymentStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+enum NotificationType {
+  WITHDRAWAL_REQUEST
+  WITHDRAWAL_APPROVED
+  WITHDRAWAL_REJECTED
+  PAYMENT_COMPLETED
+  SYSTEM
+  SESSION_REMINDER
+  SESSION_REQUEST
+  SESSION_APPROVED
+  SESSION_REJECTED
+}
+
+enum PayoutType {
+  BANK
+  ESEWA
+  KHALTI
+  CONNECT_IPS
+}
+
+model BlockedPatient {
+  id             String   @id @default(uuid())
+  psychologistId String
+  patientId      String
+  reason         String?
+  createdAt      DateTime @default(now())
+
+  @@unique([psychologistId, patientId])
+  @@index([psychologistId])
+  @@index([patientId])
+}

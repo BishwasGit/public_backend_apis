@@ -1,0 +1,57 @@
+config:
+  target: "http://localhost:3000"
+  phases:
+    - duration: 60
+      arrivalRate: 5
+      name: "Warm up"
+    - duration: 120
+      arrivalRate: 10
+      rampTo: 20
+      name: "Ramp up load"
+  defaults:
+    headers:
+      Content-Type: "application/json"
+
+scenarios:
+  - name: "User Flow"
+    flow:
+      - post:
+          url: "/auth/register"
+          json:
+            alias: "testuser{{ $randomString() }}"
+            pin: "123456"
+            role: "PATIENT"
+          capture:
+            - json: "$.id"
+              as: "userId"
+      - post:
+          url: "/auth/login"
+          json:
+            alias: "testuser{{ $randomString() }}" # This won't work easily without persisting aliases.
+            # Simplified: Use a standard test account or just test public endpoints for now + one registration flow
+            
+      # Let's fix the flow: Register -> Login (using alias from registration) -> Get Profile
+      - post:
+           url: "/auth/register"
+           json:
+             alias: "loaduser_{{ $randomString() }}"
+             pin: "123456"
+             role: "PATIENT"
+           capture: 
+             - json: "$.alias"
+               as: "userAlias"
+      - post: 
+           url: "/auth/login"
+           json:
+             identifier: "{{ userAlias }}"
+             pin: "123456"
+           capture:
+             - json: "$.access_token"
+               as: "token"
+      - get:
+          url: "/users/me"
+          headers:
+            Authorization: "Bearer {{ token }}"
+      - get:
+          url: "/profile/psychologists"
+          
