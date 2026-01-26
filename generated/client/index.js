@@ -502,7 +502,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/media/DriveA/medical/backend/generated/client",
+      "value": "/media/DriveB/backend/generated/client",
       "fromEnvVar": null
     },
     "config": {
@@ -516,7 +516,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/media/DriveA/medical/backend/prisma/schema.prisma",
+    "sourceFilePath": "/media/DriveB/backend/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -530,7 +530,6 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
