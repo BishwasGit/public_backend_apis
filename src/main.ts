@@ -49,11 +49,12 @@ async function bootstrap() {
     origin:
       process.env.NODE_ENV === 'production'
         ? [
-            'https://medical.local',
-            'https://medical.local:5173',
-            'http://192.168.1.94:5173',
-            'http://localhost:5173',
-          ]
+          'https://medical.local',
+          'https://medical.local:5173',
+          'http://192.168.1.94:5173',
+          'http://localhost:5173',
+          'https://public-backend-apis.onrender.com',
+        ]
         : true, // Allow all origins in development for network testing
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
