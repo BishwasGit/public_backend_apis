@@ -46,16 +46,7 @@ async function bootstrap() {
 
   // CORS (Allow Mobile & Frontend)
   app.enableCors({
-    origin:
-      process.env.NODE_ENV === 'production'
-        ? [
-          'https://medical.local',
-          'https://medical.local:5173',
-          'http://192.168.1.94:5173',
-          'http://localhost:5173',
-          'https://public-backend-apis.onrender.com',
-        ]
-        : true, // Allow all origins in development for network testing
+    origin: '*', // Allow all origins in development for network testing
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   });
@@ -136,3 +127,4 @@ bootstrap().catch((error) => {
   logger.error('Failed to start application:', error);
   process.exit(1);
 });
+
