@@ -18,13 +18,41 @@ async function main() {
   console.log('🌱 Starting database seed...\n');
 
   // Clear existing data
+  // Clear existing data
   console.log('🧹 Clearing existing data...');
+  
+  // Independent tables (referencing User or others)
+  await prisma.auditLog.deleteMany();
+  await prisma.notification.deleteMany();
+  await prisma.message.deleteMany();
+  await prisma.review.deleteMany();
+  
+  // Events
+  // Note: EventParticipants is a join table for many-to-many, usually named specific ways in Prisma but explicit here if model exists
+  // The schema has `model EventParticipants`, so we use the model name on prisma client which is typically camelCase of model name
+  await prisma.eventParticipants.deleteMany(); 
+  await prisma.calendarEvent.deleteMany();
+
+  // Financials & Requests
+  await prisma.withdrawalRequest.deleteMany();
+  await prisma.walletTopup.deleteMany();
+  await prisma.payoutMethod.deleteMany();
+  
+  // Settings/Other
+  await prisma.blockedPatient.deleteMany();
+
+  // Media
+  await prisma.mediaUnlock.deleteMany();
+  
+  // Core Logic Tables
   await prisma.transaction.deleteMany();
   await prisma.session.deleteMany();
   await prisma.serviceOption.deleteMany();
   await prisma.mediaFile.deleteMany();
   await prisma.mediaFolder.deleteMany();
   await prisma.wallet.deleteMany();
+  
+  // Finally User
   await prisma.user.deleteMany();
   console.log('✅ Existing data cleared\n');
 
