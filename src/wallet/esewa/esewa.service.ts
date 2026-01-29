@@ -55,8 +55,8 @@ export class EsewaService {
                 product_code: productCode,
                 product_service_charge: 0,
                 product_delivery_charge: 0,
-                success_url: `${this.configService.get('FRONTEND_URL') || 'https://public-frontend-vitereact.onrender.com'}/wallet/esewa/success`, 
-                failure_url: `${this.configService.get('FRONTEND_URL') || 'https://public-frontend-vitereact.onrender.com'}/wallet/esewa/failure`,
+                success_url: `https://public-frontend-vitereact.onrender.com/esewa/success`, 
+                failure_url: `https://public-frontend-vitereact.onrender.com/esewa/failure`,
                 signed_field_names: 'total_amount,transaction_uuid,product_code',
                 signature: signature,
             }
