@@ -352,6 +352,17 @@ exports.Prisma.BlockedPatientScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.WalletTopupScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  amount: 'amount',
+  orderId: 'orderId',
+  refId: 'refId',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -501,6 +512,12 @@ exports.PayoutType = exports.$Enums.PayoutType = {
   CONNECT_IPS: 'CONNECT_IPS'
 };
 
+exports.TopupStatus = exports.$Enums.TopupStatus = {
+  PENDING: 'PENDING',
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   MediaFolder: 'MediaFolder',
@@ -520,7 +537,8 @@ exports.Prisma.ModelName = {
   Language: 'Language',
   Translation: 'Translation',
   EventParticipants: 'EventParticipants',
-  BlockedPatient: 'BlockedPatient'
+  BlockedPatient: 'BlockedPatient',
+  WalletTopup: 'WalletTopup'
 };
 
 /**

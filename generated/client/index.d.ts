@@ -108,6 +108,11 @@ export type EventParticipants = $Result.DefaultSelection<Prisma.$EventParticipan
  * 
  */
 export type BlockedPatient = $Result.DefaultSelection<Prisma.$BlockedPatientPayload>
+/**
+ * Model WalletTopup
+ * 
+ */
+export type WalletTopup = $Result.DefaultSelection<Prisma.$WalletTopupPayload>
 
 /**
  * Enums
@@ -277,6 +282,15 @@ export const PayoutType: {
 
 export type PayoutType = (typeof PayoutType)[keyof typeof PayoutType]
 
+
+export const TopupStatus: {
+  PENDING: 'PENDING',
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED'
+};
+
+export type TopupStatus = (typeof TopupStatus)[keyof typeof TopupStatus]
+
 }
 
 export type Role = $Enums.Role
@@ -338,6 +352,10 @@ export const NotificationType: typeof $Enums.NotificationType
 export type PayoutType = $Enums.PayoutType
 
 export const PayoutType: typeof $Enums.PayoutType
+
+export type TopupStatus = $Enums.TopupStatus
+
+export const TopupStatus: typeof $Enums.TopupStatus
 
 /**
  * ##  Prisma Client ʲˢ
@@ -651,6 +669,16 @@ export class PrismaClient<
     * ```
     */
   get blockedPatient(): Prisma.BlockedPatientDelegate<ExtArgs>;
+
+  /**
+   * `prisma.walletTopup`: Exposes CRUD operations for the **WalletTopup** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more WalletTopups
+    * const walletTopups = await prisma.walletTopup.findMany()
+    * ```
+    */
+  get walletTopup(): Prisma.WalletTopupDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -1110,7 +1138,8 @@ export namespace Prisma {
     Language: 'Language',
     Translation: 'Translation',
     EventParticipants: 'EventParticipants',
-    BlockedPatient: 'BlockedPatient'
+    BlockedPatient: 'BlockedPatient',
+    WalletTopup: 'WalletTopup'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1126,7 +1155,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "user" | "mediaFolder" | "mediaFile" | "mediaUnlock" | "review" | "calendarEvent" | "serviceOption" | "wallet" | "transaction" | "session" | "auditLog" | "withdrawalRequest" | "notification" | "message" | "payoutMethod" | "language" | "translation" | "eventParticipants" | "blockedPatient"
+      modelProps: "user" | "mediaFolder" | "mediaFile" | "mediaUnlock" | "review" | "calendarEvent" | "serviceOption" | "wallet" | "transaction" | "session" | "auditLog" | "withdrawalRequest" | "notification" | "message" | "payoutMethod" | "language" | "translation" | "eventParticipants" | "blockedPatient" | "walletTopup"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2460,6 +2489,76 @@ export namespace Prisma {
           }
         }
       }
+      WalletTopup: {
+        payload: Prisma.$WalletTopupPayload<ExtArgs>
+        fields: Prisma.WalletTopupFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.WalletTopupFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WalletTopupPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.WalletTopupFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WalletTopupPayload>
+          }
+          findFirst: {
+            args: Prisma.WalletTopupFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WalletTopupPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.WalletTopupFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WalletTopupPayload>
+          }
+          findMany: {
+            args: Prisma.WalletTopupFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WalletTopupPayload>[]
+          }
+          create: {
+            args: Prisma.WalletTopupCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WalletTopupPayload>
+          }
+          createMany: {
+            args: Prisma.WalletTopupCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.WalletTopupCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WalletTopupPayload>[]
+          }
+          delete: {
+            args: Prisma.WalletTopupDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WalletTopupPayload>
+          }
+          update: {
+            args: Prisma.WalletTopupUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WalletTopupPayload>
+          }
+          deleteMany: {
+            args: Prisma.WalletTopupDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.WalletTopupUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.WalletTopupUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WalletTopupPayload>
+          }
+          aggregate: {
+            args: Prisma.WalletTopupAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateWalletTopup>
+          }
+          groupBy: {
+            args: Prisma.WalletTopupGroupByArgs<ExtArgs>
+            result: $Utils.Optional<WalletTopupGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.WalletTopupCountArgs<ExtArgs>
+            result: $Utils.Optional<WalletTopupCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -2637,6 +2736,7 @@ export namespace Prisma {
     createdEvents: number
     givenReviews: number
     receivedReviews: number
+    topups: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2656,6 +2756,7 @@ export namespace Prisma {
     createdEvents?: boolean | UserCountOutputTypeCountCreatedEventsArgs
     givenReviews?: boolean | UserCountOutputTypeCountGivenReviewsArgs
     receivedReviews?: boolean | UserCountOutputTypeCountReceivedReviewsArgs
+    topups?: boolean | UserCountOutputTypeCountTopupsArgs
   }
 
   // Custom InputTypes
@@ -2779,6 +2880,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountReceivedReviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ReviewWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountTopupsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WalletTopupWhereInput
   }
 
 
@@ -3408,6 +3516,7 @@ export namespace Prisma {
     createdEvents?: boolean | User$createdEventsArgs<ExtArgs>
     givenReviews?: boolean | User$givenReviewsArgs<ExtArgs>
     receivedReviews?: boolean | User$receivedReviewsArgs<ExtArgs>
+    topups?: boolean | User$topupsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -3497,6 +3606,7 @@ export namespace Prisma {
     createdEvents?: boolean | User$createdEventsArgs<ExtArgs>
     givenReviews?: boolean | User$givenReviewsArgs<ExtArgs>
     receivedReviews?: boolean | User$receivedReviewsArgs<ExtArgs>
+    topups?: boolean | User$topupsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -3521,6 +3631,7 @@ export namespace Prisma {
       createdEvents: Prisma.$CalendarEventPayload<ExtArgs>[]
       givenReviews: Prisma.$ReviewPayload<ExtArgs>[]
       receivedReviews: Prisma.$ReviewPayload<ExtArgs>[]
+      topups: Prisma.$WalletTopupPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -3935,6 +4046,7 @@ export namespace Prisma {
     createdEvents<T extends User$createdEventsArgs<ExtArgs> = {}>(args?: Subset<T, User$createdEventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CalendarEventPayload<ExtArgs>, T, "findMany"> | Null>
     givenReviews<T extends User$givenReviewsArgs<ExtArgs> = {}>(args?: Subset<T, User$givenReviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany"> | Null>
     receivedReviews<T extends User$receivedReviewsArgs<ExtArgs> = {}>(args?: Subset<T, User$receivedReviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany"> | Null>
+    topups<T extends User$topupsArgs<ExtArgs> = {}>(args?: Subset<T, User$topupsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WalletTopupPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4641,6 +4753,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ReviewScalarFieldEnum | ReviewScalarFieldEnum[]
+  }
+
+  /**
+   * User.topups
+   */
+  export type User$topupsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletTopup
+     */
+    select?: WalletTopupSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletTopupInclude<ExtArgs> | null
+    where?: WalletTopupWhereInput
+    orderBy?: WalletTopupOrderByWithRelationInput | WalletTopupOrderByWithRelationInput[]
+    cursor?: WalletTopupWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: WalletTopupScalarFieldEnum | WalletTopupScalarFieldEnum[]
   }
 
   /**
@@ -22614,6 +22746,1009 @@ export namespace Prisma {
 
 
   /**
+   * Model WalletTopup
+   */
+
+  export type AggregateWalletTopup = {
+    _count: WalletTopupCountAggregateOutputType | null
+    _avg: WalletTopupAvgAggregateOutputType | null
+    _sum: WalletTopupSumAggregateOutputType | null
+    _min: WalletTopupMinAggregateOutputType | null
+    _max: WalletTopupMaxAggregateOutputType | null
+  }
+
+  export type WalletTopupAvgAggregateOutputType = {
+    amount: number | null
+  }
+
+  export type WalletTopupSumAggregateOutputType = {
+    amount: number | null
+  }
+
+  export type WalletTopupMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    amount: number | null
+    orderId: string | null
+    refId: string | null
+    status: $Enums.TopupStatus | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WalletTopupMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    amount: number | null
+    orderId: string | null
+    refId: string | null
+    status: $Enums.TopupStatus | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WalletTopupCountAggregateOutputType = {
+    id: number
+    userId: number
+    amount: number
+    orderId: number
+    refId: number
+    status: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type WalletTopupAvgAggregateInputType = {
+    amount?: true
+  }
+
+  export type WalletTopupSumAggregateInputType = {
+    amount?: true
+  }
+
+  export type WalletTopupMinAggregateInputType = {
+    id?: true
+    userId?: true
+    amount?: true
+    orderId?: true
+    refId?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WalletTopupMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    amount?: true
+    orderId?: true
+    refId?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WalletTopupCountAggregateInputType = {
+    id?: true
+    userId?: true
+    amount?: true
+    orderId?: true
+    refId?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type WalletTopupAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which WalletTopup to aggregate.
+     */
+    where?: WalletTopupWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WalletTopups to fetch.
+     */
+    orderBy?: WalletTopupOrderByWithRelationInput | WalletTopupOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: WalletTopupWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WalletTopups from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WalletTopups.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned WalletTopups
+    **/
+    _count?: true | WalletTopupCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: WalletTopupAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: WalletTopupSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: WalletTopupMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: WalletTopupMaxAggregateInputType
+  }
+
+  export type GetWalletTopupAggregateType<T extends WalletTopupAggregateArgs> = {
+        [P in keyof T & keyof AggregateWalletTopup]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateWalletTopup[P]>
+      : GetScalarType<T[P], AggregateWalletTopup[P]>
+  }
+
+
+
+
+  export type WalletTopupGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WalletTopupWhereInput
+    orderBy?: WalletTopupOrderByWithAggregationInput | WalletTopupOrderByWithAggregationInput[]
+    by: WalletTopupScalarFieldEnum[] | WalletTopupScalarFieldEnum
+    having?: WalletTopupScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: WalletTopupCountAggregateInputType | true
+    _avg?: WalletTopupAvgAggregateInputType
+    _sum?: WalletTopupSumAggregateInputType
+    _min?: WalletTopupMinAggregateInputType
+    _max?: WalletTopupMaxAggregateInputType
+  }
+
+  export type WalletTopupGroupByOutputType = {
+    id: string
+    userId: string
+    amount: number
+    orderId: string
+    refId: string | null
+    status: $Enums.TopupStatus
+    createdAt: Date
+    updatedAt: Date
+    _count: WalletTopupCountAggregateOutputType | null
+    _avg: WalletTopupAvgAggregateOutputType | null
+    _sum: WalletTopupSumAggregateOutputType | null
+    _min: WalletTopupMinAggregateOutputType | null
+    _max: WalletTopupMaxAggregateOutputType | null
+  }
+
+  type GetWalletTopupGroupByPayload<T extends WalletTopupGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<WalletTopupGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof WalletTopupGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], WalletTopupGroupByOutputType[P]>
+            : GetScalarType<T[P], WalletTopupGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type WalletTopupSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    amount?: boolean
+    orderId?: boolean
+    refId?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["walletTopup"]>
+
+  export type WalletTopupSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    amount?: boolean
+    orderId?: boolean
+    refId?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["walletTopup"]>
+
+  export type WalletTopupSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    amount?: boolean
+    orderId?: boolean
+    refId?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type WalletTopupInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type WalletTopupIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $WalletTopupPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "WalletTopup"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      amount: number
+      orderId: string
+      refId: string | null
+      status: $Enums.TopupStatus
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["walletTopup"]>
+    composites: {}
+  }
+
+  type WalletTopupGetPayload<S extends boolean | null | undefined | WalletTopupDefaultArgs> = $Result.GetResult<Prisma.$WalletTopupPayload, S>
+
+  type WalletTopupCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<WalletTopupFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: WalletTopupCountAggregateInputType | true
+    }
+
+  export interface WalletTopupDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['WalletTopup'], meta: { name: 'WalletTopup' } }
+    /**
+     * Find zero or one WalletTopup that matches the filter.
+     * @param {WalletTopupFindUniqueArgs} args - Arguments to find a WalletTopup
+     * @example
+     * // Get one WalletTopup
+     * const walletTopup = await prisma.walletTopup.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends WalletTopupFindUniqueArgs>(args: SelectSubset<T, WalletTopupFindUniqueArgs<ExtArgs>>): Prisma__WalletTopupClient<$Result.GetResult<Prisma.$WalletTopupPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one WalletTopup that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {WalletTopupFindUniqueOrThrowArgs} args - Arguments to find a WalletTopup
+     * @example
+     * // Get one WalletTopup
+     * const walletTopup = await prisma.walletTopup.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends WalletTopupFindUniqueOrThrowArgs>(args: SelectSubset<T, WalletTopupFindUniqueOrThrowArgs<ExtArgs>>): Prisma__WalletTopupClient<$Result.GetResult<Prisma.$WalletTopupPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first WalletTopup that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WalletTopupFindFirstArgs} args - Arguments to find a WalletTopup
+     * @example
+     * // Get one WalletTopup
+     * const walletTopup = await prisma.walletTopup.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends WalletTopupFindFirstArgs>(args?: SelectSubset<T, WalletTopupFindFirstArgs<ExtArgs>>): Prisma__WalletTopupClient<$Result.GetResult<Prisma.$WalletTopupPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first WalletTopup that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WalletTopupFindFirstOrThrowArgs} args - Arguments to find a WalletTopup
+     * @example
+     * // Get one WalletTopup
+     * const walletTopup = await prisma.walletTopup.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends WalletTopupFindFirstOrThrowArgs>(args?: SelectSubset<T, WalletTopupFindFirstOrThrowArgs<ExtArgs>>): Prisma__WalletTopupClient<$Result.GetResult<Prisma.$WalletTopupPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more WalletTopups that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WalletTopupFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all WalletTopups
+     * const walletTopups = await prisma.walletTopup.findMany()
+     * 
+     * // Get first 10 WalletTopups
+     * const walletTopups = await prisma.walletTopup.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const walletTopupWithIdOnly = await prisma.walletTopup.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends WalletTopupFindManyArgs>(args?: SelectSubset<T, WalletTopupFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WalletTopupPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a WalletTopup.
+     * @param {WalletTopupCreateArgs} args - Arguments to create a WalletTopup.
+     * @example
+     * // Create one WalletTopup
+     * const WalletTopup = await prisma.walletTopup.create({
+     *   data: {
+     *     // ... data to create a WalletTopup
+     *   }
+     * })
+     * 
+     */
+    create<T extends WalletTopupCreateArgs>(args: SelectSubset<T, WalletTopupCreateArgs<ExtArgs>>): Prisma__WalletTopupClient<$Result.GetResult<Prisma.$WalletTopupPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many WalletTopups.
+     * @param {WalletTopupCreateManyArgs} args - Arguments to create many WalletTopups.
+     * @example
+     * // Create many WalletTopups
+     * const walletTopup = await prisma.walletTopup.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends WalletTopupCreateManyArgs>(args?: SelectSubset<T, WalletTopupCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many WalletTopups and returns the data saved in the database.
+     * @param {WalletTopupCreateManyAndReturnArgs} args - Arguments to create many WalletTopups.
+     * @example
+     * // Create many WalletTopups
+     * const walletTopup = await prisma.walletTopup.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many WalletTopups and only return the `id`
+     * const walletTopupWithIdOnly = await prisma.walletTopup.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends WalletTopupCreateManyAndReturnArgs>(args?: SelectSubset<T, WalletTopupCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WalletTopupPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a WalletTopup.
+     * @param {WalletTopupDeleteArgs} args - Arguments to delete one WalletTopup.
+     * @example
+     * // Delete one WalletTopup
+     * const WalletTopup = await prisma.walletTopup.delete({
+     *   where: {
+     *     // ... filter to delete one WalletTopup
+     *   }
+     * })
+     * 
+     */
+    delete<T extends WalletTopupDeleteArgs>(args: SelectSubset<T, WalletTopupDeleteArgs<ExtArgs>>): Prisma__WalletTopupClient<$Result.GetResult<Prisma.$WalletTopupPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one WalletTopup.
+     * @param {WalletTopupUpdateArgs} args - Arguments to update one WalletTopup.
+     * @example
+     * // Update one WalletTopup
+     * const walletTopup = await prisma.walletTopup.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends WalletTopupUpdateArgs>(args: SelectSubset<T, WalletTopupUpdateArgs<ExtArgs>>): Prisma__WalletTopupClient<$Result.GetResult<Prisma.$WalletTopupPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more WalletTopups.
+     * @param {WalletTopupDeleteManyArgs} args - Arguments to filter WalletTopups to delete.
+     * @example
+     * // Delete a few WalletTopups
+     * const { count } = await prisma.walletTopup.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends WalletTopupDeleteManyArgs>(args?: SelectSubset<T, WalletTopupDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WalletTopups.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WalletTopupUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many WalletTopups
+     * const walletTopup = await prisma.walletTopup.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends WalletTopupUpdateManyArgs>(args: SelectSubset<T, WalletTopupUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one WalletTopup.
+     * @param {WalletTopupUpsertArgs} args - Arguments to update or create a WalletTopup.
+     * @example
+     * // Update or create a WalletTopup
+     * const walletTopup = await prisma.walletTopup.upsert({
+     *   create: {
+     *     // ... data to create a WalletTopup
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the WalletTopup we want to update
+     *   }
+     * })
+     */
+    upsert<T extends WalletTopupUpsertArgs>(args: SelectSubset<T, WalletTopupUpsertArgs<ExtArgs>>): Prisma__WalletTopupClient<$Result.GetResult<Prisma.$WalletTopupPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of WalletTopups.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WalletTopupCountArgs} args - Arguments to filter WalletTopups to count.
+     * @example
+     * // Count the number of WalletTopups
+     * const count = await prisma.walletTopup.count({
+     *   where: {
+     *     // ... the filter for the WalletTopups we want to count
+     *   }
+     * })
+    **/
+    count<T extends WalletTopupCountArgs>(
+      args?: Subset<T, WalletTopupCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], WalletTopupCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a WalletTopup.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WalletTopupAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends WalletTopupAggregateArgs>(args: Subset<T, WalletTopupAggregateArgs>): Prisma.PrismaPromise<GetWalletTopupAggregateType<T>>
+
+    /**
+     * Group by WalletTopup.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WalletTopupGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends WalletTopupGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: WalletTopupGroupByArgs['orderBy'] }
+        : { orderBy?: WalletTopupGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, WalletTopupGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWalletTopupGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the WalletTopup model
+   */
+  readonly fields: WalletTopupFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for WalletTopup.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__WalletTopupClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the WalletTopup model
+   */ 
+  interface WalletTopupFieldRefs {
+    readonly id: FieldRef<"WalletTopup", 'String'>
+    readonly userId: FieldRef<"WalletTopup", 'String'>
+    readonly amount: FieldRef<"WalletTopup", 'Float'>
+    readonly orderId: FieldRef<"WalletTopup", 'String'>
+    readonly refId: FieldRef<"WalletTopup", 'String'>
+    readonly status: FieldRef<"WalletTopup", 'TopupStatus'>
+    readonly createdAt: FieldRef<"WalletTopup", 'DateTime'>
+    readonly updatedAt: FieldRef<"WalletTopup", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * WalletTopup findUnique
+   */
+  export type WalletTopupFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletTopup
+     */
+    select?: WalletTopupSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletTopupInclude<ExtArgs> | null
+    /**
+     * Filter, which WalletTopup to fetch.
+     */
+    where: WalletTopupWhereUniqueInput
+  }
+
+  /**
+   * WalletTopup findUniqueOrThrow
+   */
+  export type WalletTopupFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletTopup
+     */
+    select?: WalletTopupSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletTopupInclude<ExtArgs> | null
+    /**
+     * Filter, which WalletTopup to fetch.
+     */
+    where: WalletTopupWhereUniqueInput
+  }
+
+  /**
+   * WalletTopup findFirst
+   */
+  export type WalletTopupFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletTopup
+     */
+    select?: WalletTopupSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletTopupInclude<ExtArgs> | null
+    /**
+     * Filter, which WalletTopup to fetch.
+     */
+    where?: WalletTopupWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WalletTopups to fetch.
+     */
+    orderBy?: WalletTopupOrderByWithRelationInput | WalletTopupOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WalletTopups.
+     */
+    cursor?: WalletTopupWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WalletTopups from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WalletTopups.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WalletTopups.
+     */
+    distinct?: WalletTopupScalarFieldEnum | WalletTopupScalarFieldEnum[]
+  }
+
+  /**
+   * WalletTopup findFirstOrThrow
+   */
+  export type WalletTopupFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletTopup
+     */
+    select?: WalletTopupSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletTopupInclude<ExtArgs> | null
+    /**
+     * Filter, which WalletTopup to fetch.
+     */
+    where?: WalletTopupWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WalletTopups to fetch.
+     */
+    orderBy?: WalletTopupOrderByWithRelationInput | WalletTopupOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WalletTopups.
+     */
+    cursor?: WalletTopupWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WalletTopups from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WalletTopups.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WalletTopups.
+     */
+    distinct?: WalletTopupScalarFieldEnum | WalletTopupScalarFieldEnum[]
+  }
+
+  /**
+   * WalletTopup findMany
+   */
+  export type WalletTopupFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletTopup
+     */
+    select?: WalletTopupSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletTopupInclude<ExtArgs> | null
+    /**
+     * Filter, which WalletTopups to fetch.
+     */
+    where?: WalletTopupWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WalletTopups to fetch.
+     */
+    orderBy?: WalletTopupOrderByWithRelationInput | WalletTopupOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing WalletTopups.
+     */
+    cursor?: WalletTopupWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WalletTopups from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WalletTopups.
+     */
+    skip?: number
+    distinct?: WalletTopupScalarFieldEnum | WalletTopupScalarFieldEnum[]
+  }
+
+  /**
+   * WalletTopup create
+   */
+  export type WalletTopupCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletTopup
+     */
+    select?: WalletTopupSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletTopupInclude<ExtArgs> | null
+    /**
+     * The data needed to create a WalletTopup.
+     */
+    data: XOR<WalletTopupCreateInput, WalletTopupUncheckedCreateInput>
+  }
+
+  /**
+   * WalletTopup createMany
+   */
+  export type WalletTopupCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many WalletTopups.
+     */
+    data: WalletTopupCreateManyInput | WalletTopupCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * WalletTopup createManyAndReturn
+   */
+  export type WalletTopupCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletTopup
+     */
+    select?: WalletTopupSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many WalletTopups.
+     */
+    data: WalletTopupCreateManyInput | WalletTopupCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletTopupIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * WalletTopup update
+   */
+  export type WalletTopupUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletTopup
+     */
+    select?: WalletTopupSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletTopupInclude<ExtArgs> | null
+    /**
+     * The data needed to update a WalletTopup.
+     */
+    data: XOR<WalletTopupUpdateInput, WalletTopupUncheckedUpdateInput>
+    /**
+     * Choose, which WalletTopup to update.
+     */
+    where: WalletTopupWhereUniqueInput
+  }
+
+  /**
+   * WalletTopup updateMany
+   */
+  export type WalletTopupUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update WalletTopups.
+     */
+    data: XOR<WalletTopupUpdateManyMutationInput, WalletTopupUncheckedUpdateManyInput>
+    /**
+     * Filter which WalletTopups to update
+     */
+    where?: WalletTopupWhereInput
+  }
+
+  /**
+   * WalletTopup upsert
+   */
+  export type WalletTopupUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletTopup
+     */
+    select?: WalletTopupSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletTopupInclude<ExtArgs> | null
+    /**
+     * The filter to search for the WalletTopup to update in case it exists.
+     */
+    where: WalletTopupWhereUniqueInput
+    /**
+     * In case the WalletTopup found by the `where` argument doesn't exist, create a new WalletTopup with this data.
+     */
+    create: XOR<WalletTopupCreateInput, WalletTopupUncheckedCreateInput>
+    /**
+     * In case the WalletTopup was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<WalletTopupUpdateInput, WalletTopupUncheckedUpdateInput>
+  }
+
+  /**
+   * WalletTopup delete
+   */
+  export type WalletTopupDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletTopup
+     */
+    select?: WalletTopupSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletTopupInclude<ExtArgs> | null
+    /**
+     * Filter which WalletTopup to delete.
+     */
+    where: WalletTopupWhereUniqueInput
+  }
+
+  /**
+   * WalletTopup deleteMany
+   */
+  export type WalletTopupDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which WalletTopups to delete
+     */
+    where?: WalletTopupWhereInput
+  }
+
+  /**
+   * WalletTopup without action
+   */
+  export type WalletTopupDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WalletTopup
+     */
+    select?: WalletTopupSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WalletTopupInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -22912,6 +24047,20 @@ export namespace Prisma {
   };
 
   export type BlockedPatientScalarFieldEnum = (typeof BlockedPatientScalarFieldEnum)[keyof typeof BlockedPatientScalarFieldEnum]
+
+
+  export const WalletTopupScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    amount: 'amount',
+    orderId: 'orderId',
+    refId: 'refId',
+    status: 'status',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type WalletTopupScalarFieldEnum = (typeof WalletTopupScalarFieldEnum)[keyof typeof WalletTopupScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -23245,6 +24394,20 @@ export namespace Prisma {
    */
   export type ListEnumPayoutTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PayoutType[]'>
     
+
+
+  /**
+   * Reference to a field of type 'TopupStatus'
+   */
+  export type EnumTopupStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TopupStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'TopupStatus[]'
+   */
+  export type ListEnumTopupStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TopupStatus[]'>
+    
   /**
    * Deep Input Types
    */
@@ -23302,6 +24465,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventListRelationFilter
     givenReviews?: ReviewListRelationFilter
     receivedReviews?: ReviewListRelationFilter
+    topups?: WalletTopupListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -23353,6 +24517,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventOrderByRelationAggregateInput
     givenReviews?: ReviewOrderByRelationAggregateInput
     receivedReviews?: ReviewOrderByRelationAggregateInput
+    topups?: WalletTopupOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -23407,6 +24572,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventListRelationFilter
     givenReviews?: ReviewListRelationFilter
     receivedReviews?: ReviewListRelationFilter
+    topups?: WalletTopupListRelationFilter
   }, "id" | "alias" | "email" | "phoneNumber">
 
   export type UserOrderByWithAggregationInput = {
@@ -24796,6 +25962,78 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"BlockedPatient"> | Date | string
   }
 
+  export type WalletTopupWhereInput = {
+    AND?: WalletTopupWhereInput | WalletTopupWhereInput[]
+    OR?: WalletTopupWhereInput[]
+    NOT?: WalletTopupWhereInput | WalletTopupWhereInput[]
+    id?: StringFilter<"WalletTopup"> | string
+    userId?: StringFilter<"WalletTopup"> | string
+    amount?: FloatFilter<"WalletTopup"> | number
+    orderId?: StringFilter<"WalletTopup"> | string
+    refId?: StringNullableFilter<"WalletTopup"> | string | null
+    status?: EnumTopupStatusFilter<"WalletTopup"> | $Enums.TopupStatus
+    createdAt?: DateTimeFilter<"WalletTopup"> | Date | string
+    updatedAt?: DateTimeFilter<"WalletTopup"> | Date | string
+    user?: XOR<UserRelationFilter, UserWhereInput>
+  }
+
+  export type WalletTopupOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    amount?: SortOrder
+    orderId?: SortOrder
+    refId?: SortOrderInput | SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type WalletTopupWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    orderId?: string
+    AND?: WalletTopupWhereInput | WalletTopupWhereInput[]
+    OR?: WalletTopupWhereInput[]
+    NOT?: WalletTopupWhereInput | WalletTopupWhereInput[]
+    userId?: StringFilter<"WalletTopup"> | string
+    amount?: FloatFilter<"WalletTopup"> | number
+    refId?: StringNullableFilter<"WalletTopup"> | string | null
+    status?: EnumTopupStatusFilter<"WalletTopup"> | $Enums.TopupStatus
+    createdAt?: DateTimeFilter<"WalletTopup"> | Date | string
+    updatedAt?: DateTimeFilter<"WalletTopup"> | Date | string
+    user?: XOR<UserRelationFilter, UserWhereInput>
+  }, "id" | "orderId">
+
+  export type WalletTopupOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    amount?: SortOrder
+    orderId?: SortOrder
+    refId?: SortOrderInput | SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: WalletTopupCountOrderByAggregateInput
+    _avg?: WalletTopupAvgOrderByAggregateInput
+    _max?: WalletTopupMaxOrderByAggregateInput
+    _min?: WalletTopupMinOrderByAggregateInput
+    _sum?: WalletTopupSumOrderByAggregateInput
+  }
+
+  export type WalletTopupScalarWhereWithAggregatesInput = {
+    AND?: WalletTopupScalarWhereWithAggregatesInput | WalletTopupScalarWhereWithAggregatesInput[]
+    OR?: WalletTopupScalarWhereWithAggregatesInput[]
+    NOT?: WalletTopupScalarWhereWithAggregatesInput | WalletTopupScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"WalletTopup"> | string
+    userId?: StringWithAggregatesFilter<"WalletTopup"> | string
+    amount?: FloatWithAggregatesFilter<"WalletTopup"> | number
+    orderId?: StringWithAggregatesFilter<"WalletTopup"> | string
+    refId?: StringNullableWithAggregatesFilter<"WalletTopup"> | string | null
+    status?: EnumTopupStatusWithAggregatesFilter<"WalletTopup"> | $Enums.TopupStatus
+    createdAt?: DateTimeWithAggregatesFilter<"WalletTopup"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"WalletTopup"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     alias: string
@@ -24845,6 +26083,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventCreateNestedManyWithoutCreatorInput
     givenReviews?: ReviewCreateNestedManyWithoutPatientInput
     receivedReviews?: ReviewCreateNestedManyWithoutPsychologistInput
+    topups?: WalletTopupCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -24896,6 +26135,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatorInput
     givenReviews?: ReviewUncheckedCreateNestedManyWithoutPatientInput
     receivedReviews?: ReviewUncheckedCreateNestedManyWithoutPsychologistInput
+    topups?: WalletTopupUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -24947,6 +26187,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUpdateManyWithoutCreatorNestedInput
     givenReviews?: ReviewUpdateManyWithoutPatientNestedInput
     receivedReviews?: ReviewUpdateManyWithoutPsychologistNestedInput
+    topups?: WalletTopupUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -24998,6 +26239,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUncheckedUpdateManyWithoutCreatorNestedInput
     givenReviews?: ReviewUncheckedUpdateManyWithoutPatientNestedInput
     receivedReviews?: ReviewUncheckedUpdateManyWithoutPsychologistNestedInput
+    topups?: WalletTopupUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -26484,6 +27726,82 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type WalletTopupCreateInput = {
+    id?: string
+    amount: number
+    orderId: string
+    refId?: string | null
+    status?: $Enums.TopupStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutTopupsInput
+  }
+
+  export type WalletTopupUncheckedCreateInput = {
+    id?: string
+    userId: string
+    amount: number
+    orderId: string
+    refId?: string | null
+    status?: $Enums.TopupStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WalletTopupUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    orderId?: StringFieldUpdateOperationsInput | string
+    refId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumTopupStatusFieldUpdateOperationsInput | $Enums.TopupStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutTopupsNestedInput
+  }
+
+  export type WalletTopupUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    orderId?: StringFieldUpdateOperationsInput | string
+    refId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumTopupStatusFieldUpdateOperationsInput | $Enums.TopupStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WalletTopupCreateManyInput = {
+    id?: string
+    userId: string
+    amount: number
+    orderId: string
+    refId?: string | null
+    status?: $Enums.TopupStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WalletTopupUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    orderId?: StringFieldUpdateOperationsInput | string
+    refId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumTopupStatusFieldUpdateOperationsInput | $Enums.TopupStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WalletTopupUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    orderId?: StringFieldUpdateOperationsInput | string
+    refId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumTopupStatusFieldUpdateOperationsInput | $Enums.TopupStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -26663,6 +27981,12 @@ export namespace Prisma {
     none?: ReviewWhereInput
   }
 
+  export type WalletTopupListRelationFilter = {
+    every?: WalletTopupWhereInput
+    some?: WalletTopupWhereInput
+    none?: WalletTopupWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -26709,6 +28033,10 @@ export namespace Prisma {
   }
 
   export type ReviewOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type WalletTopupOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -28088,6 +29416,64 @@ export namespace Prisma {
     createdAt?: SortOrder
   }
 
+  export type EnumTopupStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.TopupStatus | EnumTopupStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.TopupStatus[] | ListEnumTopupStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TopupStatus[] | ListEnumTopupStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumTopupStatusFilter<$PrismaModel> | $Enums.TopupStatus
+  }
+
+  export type WalletTopupCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    amount?: SortOrder
+    orderId?: SortOrder
+    refId?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WalletTopupAvgOrderByAggregateInput = {
+    amount?: SortOrder
+  }
+
+  export type WalletTopupMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    amount?: SortOrder
+    orderId?: SortOrder
+    refId?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WalletTopupMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    amount?: SortOrder
+    orderId?: SortOrder
+    refId?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WalletTopupSumOrderByAggregateInput = {
+    amount?: SortOrder
+  }
+
+  export type EnumTopupStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TopupStatus | EnumTopupStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.TopupStatus[] | ListEnumTopupStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TopupStatus[] | ListEnumTopupStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumTopupStatusWithAggregatesFilter<$PrismaModel> | $Enums.TopupStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTopupStatusFilter<$PrismaModel>
+    _max?: NestedEnumTopupStatusFilter<$PrismaModel>
+  }
+
   export type AuditLogCreateNestedManyWithoutUserInput = {
     create?: XOR<AuditLogCreateWithoutUserInput, AuditLogUncheckedCreateWithoutUserInput> | AuditLogCreateWithoutUserInput[] | AuditLogUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AuditLogCreateOrConnectWithoutUserInput | AuditLogCreateOrConnectWithoutUserInput[]
@@ -28205,6 +29591,13 @@ export namespace Prisma {
     connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
   }
 
+  export type WalletTopupCreateNestedManyWithoutUserInput = {
+    create?: XOR<WalletTopupCreateWithoutUserInput, WalletTopupUncheckedCreateWithoutUserInput> | WalletTopupCreateWithoutUserInput[] | WalletTopupUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: WalletTopupCreateOrConnectWithoutUserInput | WalletTopupCreateOrConnectWithoutUserInput[]
+    createMany?: WalletTopupCreateManyUserInputEnvelope
+    connect?: WalletTopupWhereUniqueInput | WalletTopupWhereUniqueInput[]
+  }
+
   export type AuditLogUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<AuditLogCreateWithoutUserInput, AuditLogUncheckedCreateWithoutUserInput> | AuditLogCreateWithoutUserInput[] | AuditLogUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AuditLogCreateOrConnectWithoutUserInput | AuditLogCreateOrConnectWithoutUserInput[]
@@ -28320,6 +29713,13 @@ export namespace Prisma {
     connectOrCreate?: ReviewCreateOrConnectWithoutPsychologistInput | ReviewCreateOrConnectWithoutPsychologistInput[]
     createMany?: ReviewCreateManyPsychologistInputEnvelope
     connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+  }
+
+  export type WalletTopupUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<WalletTopupCreateWithoutUserInput, WalletTopupUncheckedCreateWithoutUserInput> | WalletTopupCreateWithoutUserInput[] | WalletTopupUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: WalletTopupCreateOrConnectWithoutUserInput | WalletTopupCreateOrConnectWithoutUserInput[]
+    createMany?: WalletTopupCreateManyUserInputEnvelope
+    connect?: WalletTopupWhereUniqueInput | WalletTopupWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -28595,6 +29995,20 @@ export namespace Prisma {
     deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
   }
 
+  export type WalletTopupUpdateManyWithoutUserNestedInput = {
+    create?: XOR<WalletTopupCreateWithoutUserInput, WalletTopupUncheckedCreateWithoutUserInput> | WalletTopupCreateWithoutUserInput[] | WalletTopupUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: WalletTopupCreateOrConnectWithoutUserInput | WalletTopupCreateOrConnectWithoutUserInput[]
+    upsert?: WalletTopupUpsertWithWhereUniqueWithoutUserInput | WalletTopupUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: WalletTopupCreateManyUserInputEnvelope
+    set?: WalletTopupWhereUniqueInput | WalletTopupWhereUniqueInput[]
+    disconnect?: WalletTopupWhereUniqueInput | WalletTopupWhereUniqueInput[]
+    delete?: WalletTopupWhereUniqueInput | WalletTopupWhereUniqueInput[]
+    connect?: WalletTopupWhereUniqueInput | WalletTopupWhereUniqueInput[]
+    update?: WalletTopupUpdateWithWhereUniqueWithoutUserInput | WalletTopupUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: WalletTopupUpdateManyWithWhereWithoutUserInput | WalletTopupUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: WalletTopupScalarWhereInput | WalletTopupScalarWhereInput[]
+  }
+
   export type AuditLogUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<AuditLogCreateWithoutUserInput, AuditLogUncheckedCreateWithoutUserInput> | AuditLogCreateWithoutUserInput[] | AuditLogUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AuditLogCreateOrConnectWithoutUserInput | AuditLogCreateOrConnectWithoutUserInput[]
@@ -28826,6 +30240,20 @@ export namespace Prisma {
     update?: ReviewUpdateWithWhereUniqueWithoutPsychologistInput | ReviewUpdateWithWhereUniqueWithoutPsychologistInput[]
     updateMany?: ReviewUpdateManyWithWhereWithoutPsychologistInput | ReviewUpdateManyWithWhereWithoutPsychologistInput[]
     deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
+  }
+
+  export type WalletTopupUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<WalletTopupCreateWithoutUserInput, WalletTopupUncheckedCreateWithoutUserInput> | WalletTopupCreateWithoutUserInput[] | WalletTopupUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: WalletTopupCreateOrConnectWithoutUserInput | WalletTopupCreateOrConnectWithoutUserInput[]
+    upsert?: WalletTopupUpsertWithWhereUniqueWithoutUserInput | WalletTopupUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: WalletTopupCreateManyUserInputEnvelope
+    set?: WalletTopupWhereUniqueInput | WalletTopupWhereUniqueInput[]
+    disconnect?: WalletTopupWhereUniqueInput | WalletTopupWhereUniqueInput[]
+    delete?: WalletTopupWhereUniqueInput | WalletTopupWhereUniqueInput[]
+    connect?: WalletTopupWhereUniqueInput | WalletTopupWhereUniqueInput[]
+    update?: WalletTopupUpdateWithWhereUniqueWithoutUserInput | WalletTopupUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: WalletTopupUpdateManyWithWhereWithoutUserInput | WalletTopupUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: WalletTopupScalarWhereInput | WalletTopupScalarWhereInput[]
   }
 
   export type MediaFileCreateNestedManyWithoutFolderInput = {
@@ -29561,6 +30989,24 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutEventParticipantsInput, UserUpdateWithoutEventParticipantsInput>, UserUncheckedUpdateWithoutEventParticipantsInput>
   }
 
+  export type UserCreateNestedOneWithoutTopupsInput = {
+    create?: XOR<UserCreateWithoutTopupsInput, UserUncheckedCreateWithoutTopupsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTopupsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type EnumTopupStatusFieldUpdateOperationsInput = {
+    set?: $Enums.TopupStatus
+  }
+
+  export type UserUpdateOneRequiredWithoutTopupsNestedInput = {
+    create?: XOR<UserCreateWithoutTopupsInput, UserUncheckedCreateWithoutTopupsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTopupsInput
+    upsert?: UserUpsertWithoutTopupsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTopupsInput, UserUpdateWithoutTopupsInput>, UserUncheckedUpdateWithoutTopupsInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -30091,6 +31537,23 @@ export namespace Prisma {
     gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type NestedEnumTopupStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.TopupStatus | EnumTopupStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.TopupStatus[] | ListEnumTopupStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TopupStatus[] | ListEnumTopupStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumTopupStatusFilter<$PrismaModel> | $Enums.TopupStatus
+  }
+
+  export type NestedEnumTopupStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TopupStatus | EnumTopupStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.TopupStatus[] | ListEnumTopupStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TopupStatus[] | ListEnumTopupStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumTopupStatusWithAggregatesFilter<$PrismaModel> | $Enums.TopupStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTopupStatusFilter<$PrismaModel>
+    _max?: NestedEnumTopupStatusFilter<$PrismaModel>
   }
 
   export type AuditLogCreateWithoutUserInput = {
@@ -30653,6 +32116,36 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type WalletTopupCreateWithoutUserInput = {
+    id?: string
+    amount: number
+    orderId: string
+    refId?: string | null
+    status?: $Enums.TopupStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WalletTopupUncheckedCreateWithoutUserInput = {
+    id?: string
+    amount: number
+    orderId: string
+    refId?: string | null
+    status?: $Enums.TopupStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WalletTopupCreateOrConnectWithoutUserInput = {
+    where: WalletTopupWhereUniqueInput
+    create: XOR<WalletTopupCreateWithoutUserInput, WalletTopupUncheckedCreateWithoutUserInput>
+  }
+
+  export type WalletTopupCreateManyUserInputEnvelope = {
+    data: WalletTopupCreateManyUserInput | WalletTopupCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AuditLogUpsertWithWhereUniqueWithoutUserInput = {
     where: AuditLogWhereUniqueInput
     update: XOR<AuditLogUpdateWithoutUserInput, AuditLogUncheckedUpdateWithoutUserInput>
@@ -31101,6 +32594,36 @@ export namespace Prisma {
     data: XOR<ReviewUpdateManyMutationInput, ReviewUncheckedUpdateManyWithoutPsychologistInput>
   }
 
+  export type WalletTopupUpsertWithWhereUniqueWithoutUserInput = {
+    where: WalletTopupWhereUniqueInput
+    update: XOR<WalletTopupUpdateWithoutUserInput, WalletTopupUncheckedUpdateWithoutUserInput>
+    create: XOR<WalletTopupCreateWithoutUserInput, WalletTopupUncheckedCreateWithoutUserInput>
+  }
+
+  export type WalletTopupUpdateWithWhereUniqueWithoutUserInput = {
+    where: WalletTopupWhereUniqueInput
+    data: XOR<WalletTopupUpdateWithoutUserInput, WalletTopupUncheckedUpdateWithoutUserInput>
+  }
+
+  export type WalletTopupUpdateManyWithWhereWithoutUserInput = {
+    where: WalletTopupScalarWhereInput
+    data: XOR<WalletTopupUpdateManyMutationInput, WalletTopupUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type WalletTopupScalarWhereInput = {
+    AND?: WalletTopupScalarWhereInput | WalletTopupScalarWhereInput[]
+    OR?: WalletTopupScalarWhereInput[]
+    NOT?: WalletTopupScalarWhereInput | WalletTopupScalarWhereInput[]
+    id?: StringFilter<"WalletTopup"> | string
+    userId?: StringFilter<"WalletTopup"> | string
+    amount?: FloatFilter<"WalletTopup"> | number
+    orderId?: StringFilter<"WalletTopup"> | string
+    refId?: StringNullableFilter<"WalletTopup"> | string | null
+    status?: EnumTopupStatusFilter<"WalletTopup"> | $Enums.TopupStatus
+    createdAt?: DateTimeFilter<"WalletTopup"> | Date | string
+    updatedAt?: DateTimeFilter<"WalletTopup"> | Date | string
+  }
+
   export type MediaFileCreateWithoutFolderInput = {
     id?: string
     filename: string
@@ -31179,6 +32702,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventCreateNestedManyWithoutCreatorInput
     givenReviews?: ReviewCreateNestedManyWithoutPatientInput
     receivedReviews?: ReviewCreateNestedManyWithoutPsychologistInput
+    topups?: WalletTopupCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutMediaFoldersInput = {
@@ -31229,6 +32753,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatorInput
     givenReviews?: ReviewUncheckedCreateNestedManyWithoutPatientInput
     receivedReviews?: ReviewUncheckedCreateNestedManyWithoutPsychologistInput
+    topups?: WalletTopupUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutMediaFoldersInput = {
@@ -31324,6 +32849,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUpdateManyWithoutCreatorNestedInput
     givenReviews?: ReviewUpdateManyWithoutPatientNestedInput
     receivedReviews?: ReviewUpdateManyWithoutPsychologistNestedInput
+    topups?: WalletTopupUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMediaFoldersInput = {
@@ -31374,6 +32900,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUncheckedUpdateManyWithoutCreatorNestedInput
     givenReviews?: ReviewUncheckedUpdateManyWithoutPatientNestedInput
     receivedReviews?: ReviewUncheckedUpdateManyWithoutPsychologistNestedInput
+    topups?: WalletTopupUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type MediaFolderCreateWithoutFilesInput = {
@@ -31579,6 +33106,7 @@ export namespace Prisma {
     EventParticipants?: EventParticipantsCreateNestedManyWithoutUserInput
     createdEvents?: CalendarEventCreateNestedManyWithoutCreatorInput
     receivedReviews?: ReviewCreateNestedManyWithoutPsychologistInput
+    topups?: WalletTopupCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutGivenReviewsInput = {
@@ -31629,6 +33157,7 @@ export namespace Prisma {
     EventParticipants?: EventParticipantsUncheckedCreateNestedManyWithoutUserInput
     createdEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatorInput
     receivedReviews?: ReviewUncheckedCreateNestedManyWithoutPsychologistInput
+    topups?: WalletTopupUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutGivenReviewsInput = {
@@ -31684,6 +33213,7 @@ export namespace Prisma {
     EventParticipants?: EventParticipantsCreateNestedManyWithoutUserInput
     createdEvents?: CalendarEventCreateNestedManyWithoutCreatorInput
     givenReviews?: ReviewCreateNestedManyWithoutPatientInput
+    topups?: WalletTopupCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReceivedReviewsInput = {
@@ -31734,6 +33264,7 @@ export namespace Prisma {
     EventParticipants?: EventParticipantsUncheckedCreateNestedManyWithoutUserInput
     createdEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatorInput
     givenReviews?: ReviewUncheckedCreateNestedManyWithoutPatientInput
+    topups?: WalletTopupUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReceivedReviewsInput = {
@@ -31837,6 +33368,7 @@ export namespace Prisma {
     EventParticipants?: EventParticipantsUpdateManyWithoutUserNestedInput
     createdEvents?: CalendarEventUpdateManyWithoutCreatorNestedInput
     receivedReviews?: ReviewUpdateManyWithoutPsychologistNestedInput
+    topups?: WalletTopupUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutGivenReviewsInput = {
@@ -31887,6 +33419,7 @@ export namespace Prisma {
     EventParticipants?: EventParticipantsUncheckedUpdateManyWithoutUserNestedInput
     createdEvents?: CalendarEventUncheckedUpdateManyWithoutCreatorNestedInput
     receivedReviews?: ReviewUncheckedUpdateManyWithoutPsychologistNestedInput
+    topups?: WalletTopupUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutReceivedReviewsInput = {
@@ -31948,6 +33481,7 @@ export namespace Prisma {
     EventParticipants?: EventParticipantsUpdateManyWithoutUserNestedInput
     createdEvents?: CalendarEventUpdateManyWithoutCreatorNestedInput
     givenReviews?: ReviewUpdateManyWithoutPatientNestedInput
+    topups?: WalletTopupUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReceivedReviewsInput = {
@@ -31998,6 +33532,7 @@ export namespace Prisma {
     EventParticipants?: EventParticipantsUncheckedUpdateManyWithoutUserNestedInput
     createdEvents?: CalendarEventUncheckedUpdateManyWithoutCreatorNestedInput
     givenReviews?: ReviewUncheckedUpdateManyWithoutPatientNestedInput
+    topups?: WalletTopupUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type SessionUpsertWithoutReviewsInput = {
@@ -32109,6 +33644,7 @@ export namespace Prisma {
     EventParticipants?: EventParticipantsCreateNestedManyWithoutUserInput
     givenReviews?: ReviewCreateNestedManyWithoutPatientInput
     receivedReviews?: ReviewCreateNestedManyWithoutPsychologistInput
+    topups?: WalletTopupCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCreatedEventsInput = {
@@ -32159,6 +33695,7 @@ export namespace Prisma {
     EventParticipants?: EventParticipantsUncheckedCreateNestedManyWithoutUserInput
     givenReviews?: ReviewUncheckedCreateNestedManyWithoutPatientInput
     receivedReviews?: ReviewUncheckedCreateNestedManyWithoutPsychologistInput
+    topups?: WalletTopupUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCreatedEventsInput = {
@@ -32241,6 +33778,7 @@ export namespace Prisma {
     EventParticipants?: EventParticipantsUpdateManyWithoutUserNestedInput
     givenReviews?: ReviewUpdateManyWithoutPatientNestedInput
     receivedReviews?: ReviewUpdateManyWithoutPsychologistNestedInput
+    topups?: WalletTopupUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreatedEventsInput = {
@@ -32291,6 +33829,7 @@ export namespace Prisma {
     EventParticipants?: EventParticipantsUncheckedUpdateManyWithoutUserNestedInput
     givenReviews?: ReviewUncheckedUpdateManyWithoutPatientNestedInput
     receivedReviews?: ReviewUncheckedUpdateManyWithoutPsychologistNestedInput
+    topups?: WalletTopupUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutServiceOptionsInput = {
@@ -32341,6 +33880,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventCreateNestedManyWithoutCreatorInput
     givenReviews?: ReviewCreateNestedManyWithoutPatientInput
     receivedReviews?: ReviewCreateNestedManyWithoutPsychologistInput
+    topups?: WalletTopupCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutServiceOptionsInput = {
@@ -32391,6 +33931,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatorInput
     givenReviews?: ReviewUncheckedCreateNestedManyWithoutPatientInput
     receivedReviews?: ReviewUncheckedCreateNestedManyWithoutPsychologistInput
+    topups?: WalletTopupUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutServiceOptionsInput = {
@@ -32457,6 +33998,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUpdateManyWithoutCreatorNestedInput
     givenReviews?: ReviewUpdateManyWithoutPatientNestedInput
     receivedReviews?: ReviewUpdateManyWithoutPsychologistNestedInput
+    topups?: WalletTopupUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutServiceOptionsInput = {
@@ -32507,6 +34049,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUncheckedUpdateManyWithoutCreatorNestedInput
     givenReviews?: ReviewUncheckedUpdateManyWithoutPatientNestedInput
     receivedReviews?: ReviewUncheckedUpdateManyWithoutPsychologistNestedInput
+    topups?: WalletTopupUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type TransactionCreateWithoutWalletInput = {
@@ -32591,6 +34134,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventCreateNestedManyWithoutCreatorInput
     givenReviews?: ReviewCreateNestedManyWithoutPatientInput
     receivedReviews?: ReviewCreateNestedManyWithoutPsychologistInput
+    topups?: WalletTopupCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutWalletInput = {
@@ -32641,6 +34185,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatorInput
     givenReviews?: ReviewUncheckedCreateNestedManyWithoutPatientInput
     receivedReviews?: ReviewUncheckedCreateNestedManyWithoutPsychologistInput
+    topups?: WalletTopupUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutWalletInput = {
@@ -32738,6 +34283,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUpdateManyWithoutCreatorNestedInput
     givenReviews?: ReviewUpdateManyWithoutPatientNestedInput
     receivedReviews?: ReviewUpdateManyWithoutPsychologistNestedInput
+    topups?: WalletTopupUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutWalletInput = {
@@ -32788,6 +34334,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUncheckedUpdateManyWithoutCreatorNestedInput
     givenReviews?: ReviewUncheckedUpdateManyWithoutPatientNestedInput
     receivedReviews?: ReviewUncheckedUpdateManyWithoutPsychologistNestedInput
+    topups?: WalletTopupUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type WalletCreateWithoutTransactionsInput = {
@@ -32966,6 +34513,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventCreateNestedManyWithoutCreatorInput
     givenReviews?: ReviewCreateNestedManyWithoutPatientInput
     receivedReviews?: ReviewCreateNestedManyWithoutPsychologistInput
+    topups?: WalletTopupCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAttendedSessionsInput = {
@@ -33016,6 +34564,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatorInput
     givenReviews?: ReviewUncheckedCreateNestedManyWithoutPatientInput
     receivedReviews?: ReviewUncheckedCreateNestedManyWithoutPsychologistInput
+    topups?: WalletTopupUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAttendedSessionsInput = {
@@ -33071,6 +34620,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventCreateNestedManyWithoutCreatorInput
     givenReviews?: ReviewCreateNestedManyWithoutPatientInput
     receivedReviews?: ReviewCreateNestedManyWithoutPsychologistInput
+    topups?: WalletTopupCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutHostedSessionsInput = {
@@ -33121,6 +34671,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatorInput
     givenReviews?: ReviewUncheckedCreateNestedManyWithoutPatientInput
     receivedReviews?: ReviewUncheckedCreateNestedManyWithoutPsychologistInput
+    topups?: WalletTopupUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutHostedSessionsInput = {
@@ -33176,6 +34727,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventCreateNestedManyWithoutCreatorInput
     givenReviews?: ReviewCreateNestedManyWithoutPatientInput
     receivedReviews?: ReviewCreateNestedManyWithoutPsychologistInput
+    topups?: WalletTopupCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutParticipatingSessionsInput = {
@@ -33226,6 +34778,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatorInput
     givenReviews?: ReviewUncheckedCreateNestedManyWithoutPatientInput
     receivedReviews?: ReviewUncheckedCreateNestedManyWithoutPsychologistInput
+    topups?: WalletTopupUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutParticipatingSessionsInput = {
@@ -33324,6 +34877,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUpdateManyWithoutCreatorNestedInput
     givenReviews?: ReviewUpdateManyWithoutPatientNestedInput
     receivedReviews?: ReviewUpdateManyWithoutPsychologistNestedInput
+    topups?: WalletTopupUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAttendedSessionsInput = {
@@ -33374,6 +34928,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUncheckedUpdateManyWithoutCreatorNestedInput
     givenReviews?: ReviewUncheckedUpdateManyWithoutPatientNestedInput
     receivedReviews?: ReviewUncheckedUpdateManyWithoutPsychologistNestedInput
+    topups?: WalletTopupUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutHostedSessionsInput = {
@@ -33435,6 +34990,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUpdateManyWithoutCreatorNestedInput
     givenReviews?: ReviewUpdateManyWithoutPatientNestedInput
     receivedReviews?: ReviewUpdateManyWithoutPsychologistNestedInput
+    topups?: WalletTopupUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutHostedSessionsInput = {
@@ -33485,6 +35041,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUncheckedUpdateManyWithoutCreatorNestedInput
     givenReviews?: ReviewUncheckedUpdateManyWithoutPatientNestedInput
     receivedReviews?: ReviewUncheckedUpdateManyWithoutPsychologistNestedInput
+    topups?: WalletTopupUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithWhereUniqueWithoutParticipatingSessionsInput = {
@@ -33604,6 +35161,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventCreateNestedManyWithoutCreatorInput
     givenReviews?: ReviewCreateNestedManyWithoutPatientInput
     receivedReviews?: ReviewCreateNestedManyWithoutPsychologistInput
+    topups?: WalletTopupCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAuditLogsInput = {
@@ -33654,6 +35212,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatorInput
     givenReviews?: ReviewUncheckedCreateNestedManyWithoutPatientInput
     receivedReviews?: ReviewUncheckedCreateNestedManyWithoutPsychologistInput
+    topups?: WalletTopupUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAuditLogsInput = {
@@ -33720,6 +35279,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUpdateManyWithoutCreatorNestedInput
     givenReviews?: ReviewUpdateManyWithoutPatientNestedInput
     receivedReviews?: ReviewUpdateManyWithoutPsychologistNestedInput
+    topups?: WalletTopupUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAuditLogsInput = {
@@ -33770,6 +35330,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUncheckedUpdateManyWithoutCreatorNestedInput
     givenReviews?: ReviewUncheckedUpdateManyWithoutPatientNestedInput
     receivedReviews?: ReviewUncheckedUpdateManyWithoutPsychologistNestedInput
+    topups?: WalletTopupUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutReviewedWithdrawalsInput = {
@@ -33820,6 +35381,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventCreateNestedManyWithoutCreatorInput
     givenReviews?: ReviewCreateNestedManyWithoutPatientInput
     receivedReviews?: ReviewCreateNestedManyWithoutPsychologistInput
+    topups?: WalletTopupCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReviewedWithdrawalsInput = {
@@ -33870,6 +35432,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatorInput
     givenReviews?: ReviewUncheckedCreateNestedManyWithoutPatientInput
     receivedReviews?: ReviewUncheckedCreateNestedManyWithoutPsychologistInput
+    topups?: WalletTopupUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReviewedWithdrawalsInput = {
@@ -33954,6 +35517,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventCreateNestedManyWithoutCreatorInput
     givenReviews?: ReviewCreateNestedManyWithoutPatientInput
     receivedReviews?: ReviewCreateNestedManyWithoutPsychologistInput
+    topups?: WalletTopupCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutWithdrawalRequestsInput = {
@@ -34004,6 +35568,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatorInput
     givenReviews?: ReviewUncheckedCreateNestedManyWithoutPatientInput
     receivedReviews?: ReviewUncheckedCreateNestedManyWithoutPsychologistInput
+    topups?: WalletTopupUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutWithdrawalRequestsInput = {
@@ -34070,6 +35635,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUpdateManyWithoutCreatorNestedInput
     givenReviews?: ReviewUpdateManyWithoutPatientNestedInput
     receivedReviews?: ReviewUpdateManyWithoutPsychologistNestedInput
+    topups?: WalletTopupUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewedWithdrawalsInput = {
@@ -34120,6 +35686,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUncheckedUpdateManyWithoutCreatorNestedInput
     givenReviews?: ReviewUncheckedUpdateManyWithoutPatientNestedInput
     receivedReviews?: ReviewUncheckedUpdateManyWithoutPsychologistNestedInput
+    topups?: WalletTopupUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type TransactionUpsertWithoutWithdrawalRequestInput = {
@@ -34216,6 +35783,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUpdateManyWithoutCreatorNestedInput
     givenReviews?: ReviewUpdateManyWithoutPatientNestedInput
     receivedReviews?: ReviewUpdateManyWithoutPsychologistNestedInput
+    topups?: WalletTopupUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutWithdrawalRequestsInput = {
@@ -34266,6 +35834,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUncheckedUpdateManyWithoutCreatorNestedInput
     givenReviews?: ReviewUncheckedUpdateManyWithoutPatientNestedInput
     receivedReviews?: ReviewUncheckedUpdateManyWithoutPsychologistNestedInput
+    topups?: WalletTopupUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutNotificationsInput = {
@@ -34316,6 +35885,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventCreateNestedManyWithoutCreatorInput
     givenReviews?: ReviewCreateNestedManyWithoutPatientInput
     receivedReviews?: ReviewCreateNestedManyWithoutPsychologistInput
+    topups?: WalletTopupCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -34366,6 +35936,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatorInput
     givenReviews?: ReviewUncheckedCreateNestedManyWithoutPatientInput
     receivedReviews?: ReviewUncheckedCreateNestedManyWithoutPsychologistInput
+    topups?: WalletTopupUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -34432,6 +36003,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUpdateManyWithoutCreatorNestedInput
     givenReviews?: ReviewUpdateManyWithoutPatientNestedInput
     receivedReviews?: ReviewUpdateManyWithoutPsychologistNestedInput
+    topups?: WalletTopupUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -34482,6 +36054,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUncheckedUpdateManyWithoutCreatorNestedInput
     givenReviews?: ReviewUncheckedUpdateManyWithoutPatientNestedInput
     receivedReviews?: ReviewUncheckedUpdateManyWithoutPsychologistNestedInput
+    topups?: WalletTopupUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutReceivedMessagesInput = {
@@ -34532,6 +36105,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventCreateNestedManyWithoutCreatorInput
     givenReviews?: ReviewCreateNestedManyWithoutPatientInput
     receivedReviews?: ReviewCreateNestedManyWithoutPsychologistInput
+    topups?: WalletTopupCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReceivedMessagesInput = {
@@ -34582,6 +36156,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatorInput
     givenReviews?: ReviewUncheckedCreateNestedManyWithoutPatientInput
     receivedReviews?: ReviewUncheckedCreateNestedManyWithoutPsychologistInput
+    topups?: WalletTopupUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReceivedMessagesInput = {
@@ -34637,6 +36212,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventCreateNestedManyWithoutCreatorInput
     givenReviews?: ReviewCreateNestedManyWithoutPatientInput
     receivedReviews?: ReviewCreateNestedManyWithoutPsychologistInput
+    topups?: WalletTopupCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSentMessagesInput = {
@@ -34687,6 +36263,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatorInput
     givenReviews?: ReviewUncheckedCreateNestedManyWithoutPatientInput
     receivedReviews?: ReviewUncheckedCreateNestedManyWithoutPsychologistInput
+    topups?: WalletTopupUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSentMessagesInput = {
@@ -34753,6 +36330,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUpdateManyWithoutCreatorNestedInput
     givenReviews?: ReviewUpdateManyWithoutPatientNestedInput
     receivedReviews?: ReviewUpdateManyWithoutPsychologistNestedInput
+    topups?: WalletTopupUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReceivedMessagesInput = {
@@ -34803,6 +36381,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUncheckedUpdateManyWithoutCreatorNestedInput
     givenReviews?: ReviewUncheckedUpdateManyWithoutPatientNestedInput
     receivedReviews?: ReviewUncheckedUpdateManyWithoutPsychologistNestedInput
+    topups?: WalletTopupUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutSentMessagesInput = {
@@ -34864,6 +36443,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUpdateManyWithoutCreatorNestedInput
     givenReviews?: ReviewUpdateManyWithoutPatientNestedInput
     receivedReviews?: ReviewUpdateManyWithoutPsychologistNestedInput
+    topups?: WalletTopupUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSentMessagesInput = {
@@ -34914,6 +36494,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUncheckedUpdateManyWithoutCreatorNestedInput
     givenReviews?: ReviewUncheckedUpdateManyWithoutPatientNestedInput
     receivedReviews?: ReviewUncheckedUpdateManyWithoutPsychologistNestedInput
+    topups?: WalletTopupUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutPayoutMethodsInput = {
@@ -34964,6 +36545,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventCreateNestedManyWithoutCreatorInput
     givenReviews?: ReviewCreateNestedManyWithoutPatientInput
     receivedReviews?: ReviewCreateNestedManyWithoutPsychologistInput
+    topups?: WalletTopupCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPayoutMethodsInput = {
@@ -35014,6 +36596,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatorInput
     givenReviews?: ReviewUncheckedCreateNestedManyWithoutPatientInput
     receivedReviews?: ReviewUncheckedCreateNestedManyWithoutPsychologistInput
+    topups?: WalletTopupUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPayoutMethodsInput = {
@@ -35080,6 +36663,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUpdateManyWithoutCreatorNestedInput
     givenReviews?: ReviewUpdateManyWithoutPatientNestedInput
     receivedReviews?: ReviewUpdateManyWithoutPsychologistNestedInput
+    topups?: WalletTopupUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPayoutMethodsInput = {
@@ -35130,6 +36714,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUncheckedUpdateManyWithoutCreatorNestedInput
     givenReviews?: ReviewUncheckedUpdateManyWithoutPatientNestedInput
     receivedReviews?: ReviewUncheckedUpdateManyWithoutPsychologistNestedInput
+    topups?: WalletTopupUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type TranslationCreateWithoutLanguageInput = {
@@ -35329,6 +36914,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventCreateNestedManyWithoutCreatorInput
     givenReviews?: ReviewCreateNestedManyWithoutPatientInput
     receivedReviews?: ReviewCreateNestedManyWithoutPsychologistInput
+    topups?: WalletTopupCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutEventParticipantsInput = {
@@ -35379,6 +36965,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatorInput
     givenReviews?: ReviewUncheckedCreateNestedManyWithoutPatientInput
     receivedReviews?: ReviewUncheckedCreateNestedManyWithoutPsychologistInput
+    topups?: WalletTopupUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutEventParticipantsInput = {
@@ -35494,6 +37081,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUpdateManyWithoutCreatorNestedInput
     givenReviews?: ReviewUpdateManyWithoutPatientNestedInput
     receivedReviews?: ReviewUpdateManyWithoutPsychologistNestedInput
+    topups?: WalletTopupUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutEventParticipantsInput = {
@@ -35541,6 +37129,227 @@ export namespace Prisma {
     wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
     reviewedWithdrawals?: WithdrawalRequestUncheckedUpdateManyWithoutReviewerNestedInput
     withdrawalRequests?: WithdrawalRequestUncheckedUpdateManyWithoutUserNestedInput
+    createdEvents?: CalendarEventUncheckedUpdateManyWithoutCreatorNestedInput
+    givenReviews?: ReviewUncheckedUpdateManyWithoutPatientNestedInput
+    receivedReviews?: ReviewUncheckedUpdateManyWithoutPsychologistNestedInput
+    topups?: WalletTopupUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutTopupsInput = {
+    id?: string
+    alias: string
+    role: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    isVerified?: boolean
+    price?: number | null
+    hashedPin: string
+    bio?: string | null
+    specialties?: NullableJsonNullValueInput | InputJsonValue
+    languages?: NullableJsonNullValueInput | InputJsonValue
+    demoMinutes?: number
+    hourlyRate?: number | null
+    isProfileVisible?: boolean
+    isOnline?: boolean
+    email?: string | null
+    isEmailVerified?: boolean
+    isPhoneVerified?: boolean
+    phoneNumber?: string | null
+    dateOfBirth?: Date | string | null
+    hasAcceptedTerms?: boolean
+    gender?: string | null
+    sexualOrientation?: string | null
+    profileImage?: string | null
+    deletedAt?: Date | string | null
+    failedLoginAttempts?: number
+    lockoutUntil?: Date | string | null
+    notificationPreferences?: NullableJsonNullValueInput | InputJsonValue
+    sessionTimeout?: number
+    theme?: string
+    status?: string | null
+    auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    mediaFolders?: MediaFolderCreateNestedManyWithoutPsychologistInput
+    receivedMessages?: MessageCreateNestedManyWithoutReceiverInput
+    sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    payoutMethods?: PayoutMethodCreateNestedManyWithoutUserInput
+    serviceOptions?: ServiceOptionCreateNestedManyWithoutUserInput
+    attendedSessions?: SessionCreateNestedManyWithoutPatientInput
+    hostedSessions?: SessionCreateNestedManyWithoutPsychologistInput
+    participatingSessions?: SessionCreateNestedManyWithoutParticipantsInput
+    wallet?: WalletCreateNestedOneWithoutUserInput
+    reviewedWithdrawals?: WithdrawalRequestCreateNestedManyWithoutReviewerInput
+    withdrawalRequests?: WithdrawalRequestCreateNestedManyWithoutUserInput
+    EventParticipants?: EventParticipantsCreateNestedManyWithoutUserInput
+    createdEvents?: CalendarEventCreateNestedManyWithoutCreatorInput
+    givenReviews?: ReviewCreateNestedManyWithoutPatientInput
+    receivedReviews?: ReviewCreateNestedManyWithoutPsychologistInput
+  }
+
+  export type UserUncheckedCreateWithoutTopupsInput = {
+    id?: string
+    alias: string
+    role: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    isVerified?: boolean
+    price?: number | null
+    hashedPin: string
+    bio?: string | null
+    specialties?: NullableJsonNullValueInput | InputJsonValue
+    languages?: NullableJsonNullValueInput | InputJsonValue
+    demoMinutes?: number
+    hourlyRate?: number | null
+    isProfileVisible?: boolean
+    isOnline?: boolean
+    email?: string | null
+    isEmailVerified?: boolean
+    isPhoneVerified?: boolean
+    phoneNumber?: string | null
+    dateOfBirth?: Date | string | null
+    hasAcceptedTerms?: boolean
+    gender?: string | null
+    sexualOrientation?: string | null
+    profileImage?: string | null
+    deletedAt?: Date | string | null
+    failedLoginAttempts?: number
+    lockoutUntil?: Date | string | null
+    notificationPreferences?: NullableJsonNullValueInput | InputJsonValue
+    sessionTimeout?: number
+    theme?: string
+    status?: string | null
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    mediaFolders?: MediaFolderUncheckedCreateNestedManyWithoutPsychologistInput
+    receivedMessages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
+    sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    payoutMethods?: PayoutMethodUncheckedCreateNestedManyWithoutUserInput
+    serviceOptions?: ServiceOptionUncheckedCreateNestedManyWithoutUserInput
+    attendedSessions?: SessionUncheckedCreateNestedManyWithoutPatientInput
+    hostedSessions?: SessionUncheckedCreateNestedManyWithoutPsychologistInput
+    participatingSessions?: SessionUncheckedCreateNestedManyWithoutParticipantsInput
+    wallet?: WalletUncheckedCreateNestedOneWithoutUserInput
+    reviewedWithdrawals?: WithdrawalRequestUncheckedCreateNestedManyWithoutReviewerInput
+    withdrawalRequests?: WithdrawalRequestUncheckedCreateNestedManyWithoutUserInput
+    EventParticipants?: EventParticipantsUncheckedCreateNestedManyWithoutUserInput
+    createdEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatorInput
+    givenReviews?: ReviewUncheckedCreateNestedManyWithoutPatientInput
+    receivedReviews?: ReviewUncheckedCreateNestedManyWithoutPsychologistInput
+  }
+
+  export type UserCreateOrConnectWithoutTopupsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutTopupsInput, UserUncheckedCreateWithoutTopupsInput>
+  }
+
+  export type UserUpsertWithoutTopupsInput = {
+    update: XOR<UserUpdateWithoutTopupsInput, UserUncheckedUpdateWithoutTopupsInput>
+    create: XOR<UserCreateWithoutTopupsInput, UserUncheckedCreateWithoutTopupsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutTopupsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutTopupsInput, UserUncheckedUpdateWithoutTopupsInput>
+  }
+
+  export type UserUpdateWithoutTopupsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    alias?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    price?: NullableFloatFieldUpdateOperationsInput | number | null
+    hashedPin?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    specialties?: NullableJsonNullValueInput | InputJsonValue
+    languages?: NullableJsonNullValueInput | InputJsonValue
+    demoMinutes?: IntFieldUpdateOperationsInput | number
+    hourlyRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    isProfileVisible?: BoolFieldUpdateOperationsInput | boolean
+    isOnline?: BoolFieldUpdateOperationsInput | boolean
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    isPhoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    hasAcceptedTerms?: BoolFieldUpdateOperationsInput | boolean
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    sexualOrientation?: NullableStringFieldUpdateOperationsInput | string | null
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedLoginAttempts?: IntFieldUpdateOperationsInput | number
+    lockoutUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    notificationPreferences?: NullableJsonNullValueInput | InputJsonValue
+    sessionTimeout?: IntFieldUpdateOperationsInput | number
+    theme?: StringFieldUpdateOperationsInput | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    mediaFolders?: MediaFolderUpdateManyWithoutPsychologistNestedInput
+    receivedMessages?: MessageUpdateManyWithoutReceiverNestedInput
+    sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    payoutMethods?: PayoutMethodUpdateManyWithoutUserNestedInput
+    serviceOptions?: ServiceOptionUpdateManyWithoutUserNestedInput
+    attendedSessions?: SessionUpdateManyWithoutPatientNestedInput
+    hostedSessions?: SessionUpdateManyWithoutPsychologistNestedInput
+    participatingSessions?: SessionUpdateManyWithoutParticipantsNestedInput
+    wallet?: WalletUpdateOneWithoutUserNestedInput
+    reviewedWithdrawals?: WithdrawalRequestUpdateManyWithoutReviewerNestedInput
+    withdrawalRequests?: WithdrawalRequestUpdateManyWithoutUserNestedInput
+    EventParticipants?: EventParticipantsUpdateManyWithoutUserNestedInput
+    createdEvents?: CalendarEventUpdateManyWithoutCreatorNestedInput
+    givenReviews?: ReviewUpdateManyWithoutPatientNestedInput
+    receivedReviews?: ReviewUpdateManyWithoutPsychologistNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutTopupsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    alias?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    price?: NullableFloatFieldUpdateOperationsInput | number | null
+    hashedPin?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    specialties?: NullableJsonNullValueInput | InputJsonValue
+    languages?: NullableJsonNullValueInput | InputJsonValue
+    demoMinutes?: IntFieldUpdateOperationsInput | number
+    hourlyRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    isProfileVisible?: BoolFieldUpdateOperationsInput | boolean
+    isOnline?: BoolFieldUpdateOperationsInput | boolean
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    isPhoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    hasAcceptedTerms?: BoolFieldUpdateOperationsInput | boolean
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    sexualOrientation?: NullableStringFieldUpdateOperationsInput | string | null
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedLoginAttempts?: IntFieldUpdateOperationsInput | number
+    lockoutUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    notificationPreferences?: NullableJsonNullValueInput | InputJsonValue
+    sessionTimeout?: IntFieldUpdateOperationsInput | number
+    theme?: StringFieldUpdateOperationsInput | string
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    mediaFolders?: MediaFolderUncheckedUpdateManyWithoutPsychologistNestedInput
+    receivedMessages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
+    sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    payoutMethods?: PayoutMethodUncheckedUpdateManyWithoutUserNestedInput
+    serviceOptions?: ServiceOptionUncheckedUpdateManyWithoutUserNestedInput
+    attendedSessions?: SessionUncheckedUpdateManyWithoutPatientNestedInput
+    hostedSessions?: SessionUncheckedUpdateManyWithoutPsychologistNestedInput
+    participatingSessions?: SessionUncheckedUpdateManyWithoutParticipantsNestedInput
+    wallet?: WalletUncheckedUpdateOneWithoutUserNestedInput
+    reviewedWithdrawals?: WithdrawalRequestUncheckedUpdateManyWithoutReviewerNestedInput
+    withdrawalRequests?: WithdrawalRequestUncheckedUpdateManyWithoutUserNestedInput
+    EventParticipants?: EventParticipantsUncheckedUpdateManyWithoutUserNestedInput
     createdEvents?: CalendarEventUncheckedUpdateManyWithoutCreatorNestedInput
     givenReviews?: ReviewUncheckedUpdateManyWithoutPatientNestedInput
     receivedReviews?: ReviewUncheckedUpdateManyWithoutPsychologistNestedInput
@@ -35712,6 +37521,16 @@ export namespace Prisma {
     rating: number
     comment: string
     isHidden?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WalletTopupCreateManyUserInput = {
+    id?: string
+    amount: number
+    orderId: string
+    refId?: string | null
+    status?: $Enums.TopupStatus
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -36285,6 +38104,36 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type WalletTopupUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    orderId?: StringFieldUpdateOperationsInput | string
+    refId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumTopupStatusFieldUpdateOperationsInput | $Enums.TopupStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WalletTopupUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    orderId?: StringFieldUpdateOperationsInput | string
+    refId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumTopupStatusFieldUpdateOperationsInput | $Enums.TopupStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WalletTopupUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    orderId?: StringFieldUpdateOperationsInput | string
+    refId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumTopupStatusFieldUpdateOperationsInput | $Enums.TopupStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type MediaFileCreateManyFolderInput = {
     id?: string
     filename: string
@@ -36472,6 +38321,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUpdateManyWithoutCreatorNestedInput
     givenReviews?: ReviewUpdateManyWithoutPatientNestedInput
     receivedReviews?: ReviewUpdateManyWithoutPsychologistNestedInput
+    topups?: WalletTopupUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutParticipatingSessionsInput = {
@@ -36522,6 +38372,7 @@ export namespace Prisma {
     createdEvents?: CalendarEventUncheckedUpdateManyWithoutCreatorNestedInput
     givenReviews?: ReviewUncheckedUpdateManyWithoutPatientNestedInput
     receivedReviews?: ReviewUncheckedUpdateManyWithoutPsychologistNestedInput
+    topups?: WalletTopupUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutParticipatingSessionsInput = {
@@ -36732,6 +38583,10 @@ export namespace Prisma {
      * @deprecated Use BlockedPatientDefaultArgs instead
      */
     export type BlockedPatientArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = BlockedPatientDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use WalletTopupDefaultArgs instead
+     */
+    export type WalletTopupArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = WalletTopupDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany
