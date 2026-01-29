@@ -58,6 +58,7 @@ model User {
   createdEvents           CalendarEvent[]     @relation("CreatedEvents")
   givenReviews            Review[]            @relation("PatientReviews")
   receivedReviews         Review[]            @relation("PsychologistReviews")
+  topups                  WalletTopup[]
 
   @@index([role])
   @@index([isVerified])
@@ -474,4 +475,25 @@ model BlockedPatient {
   @@unique([psychologistId, patientId])
   @@index([psychologistId])
   @@index([patientId])
+}
+
+model WalletTopup {
+  id          String        @id @default(uuid())
+  userId      String
+  amount      Float
+  orderId     String        @unique
+  refId       String?       // eSewa transaction reference ID
+  status      TopupStatus   @default(PENDING)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  user        User          @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([status])
+}
+
+enum TopupStatus {
+  PENDING
+  COMPLETED
+  FAILED
 }
