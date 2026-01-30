@@ -55,8 +55,8 @@ export class EsewaService {
                 product_code: productCode,
                 product_service_charge: 0,
                 product_delivery_charge: 0,
-                success_url: `https://public-frontend-vitereact.onrender.com/esewa/success`, 
-                failure_url: `https://public-frontend-vitereact.onrender.com/esewa/failure`,
+                success_url: `http://localhost:5173/esewa/success`, 
+                failure_url: `http://localhost:5173/esewa/failure`,
                 signed_field_names: 'total_amount,transaction_uuid,product_code',
                 signature: signature,
             }
@@ -95,13 +95,12 @@ export class EsewaService {
             throw new BadRequestException('Invalid signature');
         }
 
-        // 3. Find and Update Transaction
+        // 3. Find Transaction (Initial check)
         const topup = await this.prisma.walletTopup.findUnique({
             where: { orderId: transaction_uuid },
         });
 
         if (!topup) throw new BadRequestException('Invalid Order ID');
-        if (topup.status === TopupStatus.COMPLETED) return { success: true, message: 'Already verified' };
         
         // Amount check (allowing float string parsing)
         const returnedAmount = parseFloat(total_amount.replace(/,/g, ''));
@@ -109,8 +108,20 @@ export class EsewaService {
              throw new BadRequestException('Amount mismatch');
         }
 
-        // 4. Update Database
+        // 4. Update Database (Atomic Transaction)
         return this.prisma.$transaction(async (tx) => {
+            // Re-fetch inside transaction to prevent race conditions
+            const existingTopup = await tx.walletTopup.findUnique({
+                where: { id: topup.id }
+            });
+
+            if (!existingTopup) throw new BadRequestException('Transaction not found');
+            
+            // Critical Idempotency Check inside transaction
+            if (existingTopup.status === TopupStatus.COMPLETED) {
+                return { success: true, message: 'Already verified', status: 'COMPLETED' };
+            }
+
             // Update Topup
             await tx.walletTopup.update({
                 where: { id: topup.id },
