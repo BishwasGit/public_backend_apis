@@ -55,8 +55,8 @@ export class EsewaService {
                 product_code: productCode,
                 product_service_charge: 0,
                 product_delivery_charge: 0,
-                success_url: `http://localhost:5173/esewa/success`, 
-                failure_url: `http://localhost:5173/esewa/failure`,
+                success_url: `${this.configService.get('FRONTEND_URL')}/esewa/success`, 
+                failure_url: `${this.configService.get('FRONTEND_URL')}/esewa/failure`,
                 signed_field_names: 'total_amount,transaction_uuid,product_code',
                 signature: signature,
             }
