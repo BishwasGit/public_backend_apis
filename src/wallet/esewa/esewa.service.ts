@@ -20,7 +20,7 @@ export class EsewaService {
         private configService: ConfigService,
     ) {}
 
-    async initializePayment(userId: string, amount: number) {
+    async initializePayment(userId: string, amount: number, successUrl?: string, failureUrl?: string) {
         if (amount <= 0) throw new BadRequestException('Amount must be positive');
 
         const orderId = `${Date.now()}-${crypto.randomBytes(4).toString('hex')}`;
@@ -45,6 +45,12 @@ export class EsewaService {
         const signatureString = `total_amount=${totalAmount},transaction_uuid=${transactionUuid},product_code=${productCode}`;
         const signature = this.generateSignature(signatureString);
 
+        // Determine callback URLs
+        // Priority: Provided Params > Env Var > Default Localhost (Failsafe)
+        const frontendUrl = this.configService.get('FRONTEND_URL') || 'http://localhost:5173';
+        const finalSuccessUrl = successUrl || `${frontendUrl}/esewa/success`;
+        const finalFailureUrl = failureUrl || `${frontendUrl}/esewa/failure`;
+
         return {
             action: this.baseUrl,
             params: {
@@ -55,8 +61,8 @@ export class EsewaService {
                 product_code: productCode,
                 product_service_charge: 0,
                 product_delivery_charge: 0,
-                success_url: `${this.configService.get('FRONTEND_URL')}/esewa/success`, 
-                failure_url: `${this.configService.get('FRONTEND_URL')}/esewa/failure`,
+                success_url: finalSuccessUrl, 
+                failure_url: finalFailureUrl,
                 signed_field_names: 'total_amount,transaction_uuid,product_code',
                 signature: signature,
             }
@@ -108,28 +114,36 @@ export class EsewaService {
              throw new BadRequestException('Amount mismatch');
         }
 
-        // 4. Update Database (Atomic Transaction)
+        // 4. Update Database (Atomic Concurrency Control)
         return this.prisma.$transaction(async (tx) => {
-            // Re-fetch inside transaction to prevent race conditions
-            const existingTopup = await tx.walletTopup.findUnique({
-                where: { id: topup.id }
-            });
-
-            if (!existingTopup) throw new BadRequestException('Transaction not found');
-            
-            // Critical Idempotency Check inside transaction
-            if (existingTopup.status === TopupStatus.COMPLETED) {
-                return { success: true, message: 'Already verified', status: 'COMPLETED' };
-            }
-
-            // Update Topup
-            await tx.walletTopup.update({
-                where: { id: topup.id },
+            // Attempt to transition status from PENDING to COMPLETED atomically
+            // updateMany is used here because it allows a where clause with non-unique fields (status),
+            // effectively acting as a "Compare and Swap" (CAS) operation.
+            const updateResult = await tx.walletTopup.updateMany({
+                where: { 
+                    id: topup.id,
+                    status: TopupStatus.PENDING 
+                },
                 data: {
                     status: TopupStatus.COMPLETED,
                     refId: transaction_code,
                 },
             });
+
+            // If count is 0, it means either:
+            // a) The record doesn't exist (unlikely given previous check)
+            // b) The status was NOT 'PENDING' (already completed by another request)
+            if (updateResult.count === 0) {
+                 // Double check to confirm it's completed (idempotency)
+                 const current = await tx.walletTopup.findUnique({ where: { id: topup.id } });
+                 if (current && current.status === TopupStatus.COMPLETED) {
+                     return { success: true, message: 'Already verified', status: 'COMPLETED' };
+                 }
+                 throw new BadRequestException('Transaction state invalid or already processed');
+            }
+
+            // If we are here, WE are the ones who successfully claimed the transaction.
+            // Proceed to update wallet.
 
             // Update Wallet
             let wallet = await tx.wallet.findUnique({ where: { userId: topup.userId } });

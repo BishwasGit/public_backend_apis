@@ -8,9 +8,9 @@ export class EsewaController {
 
   @UseGuards(JwtAuthGuard)
   @Post('init')
-  async initPayment(@Req() req, @Body() body: { amount: number }) {
+  async initPayment(@Req() req, @Body() body: { amount: number; successUrl?: string; failureUrl?: string }) {
     const userId = (req as any).user['id']; // Assumes Request has user from JwtStrategy
-    return this.esewaService.initializePayment(userId, body.amount);
+    return this.esewaService.initializePayment(userId, body.amount, body.successUrl, body.failureUrl);
   }
 
   // Verification is called by Frontend after redirect
