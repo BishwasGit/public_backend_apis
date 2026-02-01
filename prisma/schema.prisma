@@ -59,6 +59,8 @@ model User {
   givenReviews            Review[]            @relation("PatientReviews")
   receivedReviews         Review[]            @relation("PsychologistReviews")
   topups                  WalletTopup[]
+  reportedDisputes        Dispute[]           @relation("ReportedDisputes")
+  resolvedDisputes        Dispute[]           @relation("ResolvedDisputes")
 
   @@index([role])
   @@index([isVerified])
@@ -218,6 +220,7 @@ model Session {
   maxParticipants  Int           @default(1)
   title            String?
   reviews        Review[]
+  disputes       Dispute[]
 
   @@index([psychologistId, status])
   @@index([patientId, status])
@@ -496,4 +499,34 @@ enum TopupStatus {
   PENDING
   COMPLETED
   FAILED
+}
+
+model Dispute {
+  id              String        @id @default(uuid())
+  sessionId       String
+  reporterId      String
+  amount          Float
+  reason          String
+  description     String
+  status          DisputeStatus @default(PENDING)
+  resolutionNotes String?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  resolvedAt      DateTime?
+  resolvedBy      String?
+
+  session         Session       @relation(fields: [sessionId], references: [id])
+  reporter        User          @relation("ReportedDisputes", fields: [reporterId], references: [id])
+  resolver        User?         @relation("ResolvedDisputes", fields: [resolvedBy], references: [id])
+
+  @@index([sessionId])
+  @@index([reporterId])
+  @@index([status])
+}
+
+enum DisputeStatus {
+  PENDING
+  RESOLVED
+  REFUNDED
+  DISMISSED
 }

@@ -4,7 +4,7 @@ import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class AnalyticsService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   // Comprehensive Dashboard Overview
   async getOverview() {
@@ -268,47 +268,32 @@ export class AnalyticsService {
         startDate.setMonth(now.getMonth() - 1);
     }
 
-    const [totalRevenue, platformFees, psychologistEarnings, refunds] =
-      await Promise.all([
-        this.prisma.session.aggregate({
-          _sum: { price: true },
-          where: {
-            status: SessionStatus.COMPLETED,
-            createdAt: { gte: startDate },
-          },
-        }),
-        this.prisma.transaction.aggregate({
-          _sum: { amount: true },
-          where: {
-            type: TransactionType.SESSION_PAYMENT,
-            createdAt: { gte: startDate },
-          },
-        }),
-        this.prisma.transaction.aggregate({
-          _sum: { amount: true },
-          where: {
-            type: TransactionType.SESSION_PAYMENT,
-            createdAt: { gte: startDate },
-          },
-        }),
-        this.prisma.transaction.aggregate({
-          _sum: { amount: true },
-          where: {
-            type: TransactionType.REFUND,
-            createdAt: { gte: startDate },
-          },
-        }),
-      ]);
+    const [totalRevenue, refunds] = await Promise.all([
+      this.prisma.session.aggregate({
+        _sum: { price: true },
+        where: {
+          status: SessionStatus.COMPLETED,
+          createdAt: { gte: startDate },
+        },
+      }),
+      this.prisma.transaction.aggregate({
+        _sum: { amount: true },
+        where: {
+          type: TransactionType.REFUND,
+          createdAt: { gte: startDate },
+        },
+      }),
+    ]);
 
     const gross = totalRevenue._sum.price || 0;
-    const net = psychologistEarnings._sum.amount || 0;
-    const fees = gross - net;
+    const platformFees = gross * 0.10; // 10% Platform Fee
+    const net = gross - platformFees; // Psychologist Earnings
 
     return {
       period,
       gross,
-      net,
-      platformFees: fees,
+      net, // This now reflects what Psychologists earned
+      platformFees, // This is Admin/Platform revenue
       refunds: Math.abs(refunds._sum.amount || 0),
       transactionCount: await this.prisma.transaction.count({
         where: { createdAt: { gte: startDate } },

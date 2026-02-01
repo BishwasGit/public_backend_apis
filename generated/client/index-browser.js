@@ -363,6 +363,21 @@ exports.Prisma.WalletTopupScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.DisputeScalarFieldEnum = {
+  id: 'id',
+  sessionId: 'sessionId',
+  reporterId: 'reporterId',
+  amount: 'amount',
+  reason: 'reason',
+  description: 'description',
+  status: 'status',
+  resolutionNotes: 'resolutionNotes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  resolvedAt: 'resolvedAt',
+  resolvedBy: 'resolvedBy'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -518,6 +533,13 @@ exports.TopupStatus = exports.$Enums.TopupStatus = {
   FAILED: 'FAILED'
 };
 
+exports.DisputeStatus = exports.$Enums.DisputeStatus = {
+  PENDING: 'PENDING',
+  RESOLVED: 'RESOLVED',
+  REFUNDED: 'REFUNDED',
+  DISMISSED: 'DISMISSED'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   MediaFolder: 'MediaFolder',
@@ -538,7 +560,8 @@ exports.Prisma.ModelName = {
   Translation: 'Translation',
   EventParticipants: 'EventParticipants',
   BlockedPatient: 'BlockedPatient',
-  WalletTopup: 'WalletTopup'
+  WalletTopup: 'WalletTopup',
+  Dispute: 'Dispute'
 };
 
 /**

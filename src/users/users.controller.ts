@@ -27,7 +27,7 @@ import { UsersService } from './users.service';
 @ApiTags('users')
 @Controller({ path: 'users', version: '1' })
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) { }
 
   @Post()
   @UseGuards(JwtAuthGuard, RolesGuard)
@@ -47,12 +47,13 @@ export class UsersController {
   })
   @ApiResponse({ status: 200, description: 'Returns list of users' })
   findAll(@Query() query: ListUsersDto) {
-    const { role, gender, sexualOrientation, minAge, maxAge } = query;
+    const { role, gender, sexualOrientation, minAge, maxAge, search } = query;
     return this.usersService.findAll({}, role, {
       gender,
       sexualOrientation,
       minAge,
       maxAge,
+      search,
     });
   }
 

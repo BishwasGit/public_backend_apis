@@ -1,5 +1,5 @@
 // seed.js - comprehensive dummy data for all modules
-const { PrismaClient } = require('@prisma/client');
+const { PrismaClient } = require('./generated/client');
 const bcrypt = require('bcrypt');
 
 const prisma = new PrismaClient();
@@ -101,7 +101,7 @@ async function main() {
         userId: phy.id,
         name: 'Standard Session',
         price: 50,
-        type: 'ONE_ON_ONE',
+        type: 'VIDEO',
         billingType: 'PER_SESSION',
         isEnabled: true,
       },
@@ -109,22 +109,98 @@ async function main() {
     console.log(`⚙️ Added service option for ${phy.alias}`);
   }
 
-  // ---------- Sessions (pair psychologists with patients) ----------
-  for (let i = 0; i < Math.min(patientSubset.length, psychSubset.length); i++) {
-    const patient = patientSubset[i];
-    const psychologist = psychSubset[i];
-    await prisma.session.create({
+  // ---------- Financial Data & Sessions ----------
+  console.log('💰 Seeding financial data...');
+  
+  // Create Past Completed Sessions (for revenue)
+  const prices = [50, 100, 150, 200];
+  const pastDate = new Date();
+  pastDate.setMonth(pastDate.getMonth() - 1); // Starting 1 month ago
+
+  for (let i = 0; i < 20; i++) {
+    const patient = patientSubset[i % patientSubset.length];
+    const psychologist = psychSubset[i % psychSubset.length];
+    const price = prices[i % prices.length];
+    const sessionDate = new Date(pastDate.getTime() + i * 24 * 60 * 60 * 1000); // Spread over 20 days
+
+    // Create Completed Session
+    const session = await prisma.session.create({
       data: {
         patientId: patient.id,
         psychologistId: psychologist.id,
-        startTime: new Date(),
-        endTime: new Date(Date.now() + 60 * 60 * 1000), // 1 hour later
-        status: 'SCHEDULED',
+        startTime: sessionDate,
+        endTime: new Date(sessionDate.getTime() + 60 * 60 * 1000),
+        status: 'COMPLETED',
         type: 'ONE_ON_ONE',
-        price: 50,
+        price: price,
+        createdAt: sessionDate
       },
     });
-    console.log(`📅 Created session between ${patient.alias} and ${psychologist.alias}`);
+
+    // Create Transactions for this session
+    // 1. Patient Pays
+    await prisma.transaction.create({
+      data: {
+        wallet: { connect: { userId: patient.id } },
+        amount: price,
+        type: 'SESSION_PAYMENT',
+        status: 'COMPLETED',
+        description: `Payment for session ${session.id}`,
+        createdAt: sessionDate
+      }
+    });
+
+    // 2. Psychologist Earns (90%)
+    const earnings = price * 0.9;
+    await prisma.transaction.create({
+      data: {
+        wallet: { connect: { userId: psychologist.id } },
+        amount: earnings,
+        type: 'DEPOSIT', // Psychologist earning
+        status: 'COMPLETED',
+        description: `Earnings for session ${session.id}`,
+        createdAt: sessionDate
+      }
+    });
+
+    // Update Wallets
+    // Patient pays full price
+    const patientWallet = await prisma.wallet.findUnique({ where: { userId: patient.id } });
+    if(patientWallet) {
+        await prisma.wallet.update({
+            where: { id: patientWallet.id },
+            data: { balance: { decrement: price } }
+        });
+    }
+
+    // Psychologist gets 90%
+    const psychWallet = await prisma.wallet.findUnique({ where: { userId: psychologist.id } });
+    if (!psychWallet) {
+         await prisma.wallet.create({ data: { userId: psychologist.id, balance: earnings } });
+    } else {
+         await prisma.wallet.update({
+            where: { id: psychWallet.id },
+            data: { balance: { increment: earnings } }
+         });
+    }
+
+    console.log(`✅ Completed session & payments: ${patient.alias} -> ${psychologist.alias} ($${price})`);
+  }
+
+  // Create some Refunds
+  const refundAmount = 50;
+  if(patientSubset.length > 0) {
+      await prisma.transaction.create({
+        data: {
+            wallet: { connect: { userId: patientSubset[0].id } },
+            amount: refundAmount,
+            type: 'REFUND',
+            status: 'COMPLETED',
+            description: 'Refund for cancelled session',
+            createdAt: new Date()
+        }
+      });
+      console.log(`💸 Created sample refund of $${refundAmount}`);
   }
 }
 

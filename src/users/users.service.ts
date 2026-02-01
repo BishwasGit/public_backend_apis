@@ -63,11 +63,19 @@ export class UsersService {
       sexualOrientation?: string;
       minAge?: number;
       maxAge?: number;
+      search?: string;
     },
   ) {
     const where: any = role ? { role } : {};
 
     if (filters) {
+      if (filters.search) {
+        where.OR = [
+          { alias: { contains: filters.search, mode: 'insensitive' } },
+          { email: { contains: filters.search, mode: 'insensitive' } },
+          { phoneNumber: { contains: filters.search, mode: 'insensitive' } },
+        ];
+      }
       if (filters.gender) where.gender = filters.gender;
       if (filters.sexualOrientation)
         where.sexualOrientation = filters.sexualOrientation;

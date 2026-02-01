@@ -9,6 +9,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuditModule } from './audit/audit.module';
 import { AuthModule } from './auth/auth.module';
+import { DisputesModule } from './disputes/disputes.module';
 import { BlockedPatientModule } from './blocked-patient/blocked-patient.module';
 import { CalendarModule } from './calendar/calendar.module';
 import { EncryptionService } from './common/encryption/encryption.service';
@@ -52,6 +53,7 @@ import { TranslationController } from './modules/i18n/translation.controller';
     AuditModule, // Global audit logging
     UsersModule,
     AuthModule,
+    DisputesModule,
     VideoModule,
     WalletModule,
     ProfileModule,
