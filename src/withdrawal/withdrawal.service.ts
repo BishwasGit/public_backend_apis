@@ -9,7 +9,7 @@ export class WithdrawalService {
         private emailService: EmailService,
     ) { }
 
-    async createRequest(userId: string, amount: number) {
+    async createRequest(userId: string, amount: number, payoutMethodId: string) {
         // Validate amount
         if (amount <= 0) {
             throw new BadRequestException('Amount must be greater than 0');
@@ -32,6 +32,15 @@ export class WithdrawalService {
             );
         }
 
+        // Get payout method details
+        const payoutMethod = await this.prisma.payoutMethod.findUnique({
+            where: { id: payoutMethodId },
+        });
+
+        if (!payoutMethod || payoutMethod.userId !== userId) {
+            throw new BadRequestException('Invalid payout method provided');
+        }
+
         // Create withdrawal request
         const request = await this.prisma.withdrawalRequest.create({
             data: {
@@ -39,6 +48,10 @@ export class WithdrawalService {
                 amount,
                 status: 'PENDING',
                 paymentStatus: 'PENDING',
+                payoutDetails: {
+                    type: payoutMethod.type,
+                    details: payoutMethod.details,
+                }, // Store snapshot
             },
             include: {
                 user: {
@@ -96,7 +109,7 @@ export class WithdrawalService {
                 reviewer: {
                     select: {
                         alias: true,
-                        },
+                    },
                 },
             },
         });
@@ -167,7 +180,7 @@ export class WithdrawalService {
                             alias: true,
                             role: true,
                             email: true,
-                            },
+                        },
                     },
                     reviewer: {
                         select: {

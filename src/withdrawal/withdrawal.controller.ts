@@ -16,10 +16,10 @@ export class WithdrawalController {
 
     @Post()
     @ApiOperation({ summary: 'Create a withdrawal request' })
-    @ApiBody({ schema: { type: 'object', properties: { amount: { type: 'number', example: 100 } } } })
+    @ApiBody({ schema: { type: 'object', properties: { amount: { type: 'number', example: 100 }, payoutMethodId: { type: 'string', example: 'uuid' } } } })
     @Audit(AuditEntity.TRANSACTION, AuditAction.CREATE)
-    async createRequest(@Request() req, @Body('amount') amount: number) {
-        return this.withdrawalService.createRequest(req.user.id, amount);
+    async createRequest(@Request() req, @Body() body: { amount: number; payoutMethodId: string }) {
+        return this.withdrawalService.createRequest(req.user.id, body.amount, body.payoutMethodId);
     }
 
     @Get('my')
@@ -82,27 +82,5 @@ export class WithdrawalController {
     ) {
         return this.withdrawalService.completePayment(id, req.user.id, paymentProof);
     }
-    @Get('methods')
-    @ApiOperation({ summary: 'Get my payout methods' })
-    async getPayoutMethods(@Request() req) {
-        return this.withdrawalService.getPayoutMethods(req.user.id);
-    }
 
-    @Post('methods')
-    @ApiOperation({ summary: 'Add a payout method' })
-    @ApiBody({ schema: { type: 'object', properties: { type: { type: 'string', example: 'BANK_TRANSFER' }, details: { type: 'object' }, isDefault: { type: 'boolean' } } } })
-    async addPayoutMethod(@Request() req, @Body() body: any) {
-        return this.withdrawalService.addPayoutMethod(
-            req.user.id,
-            body.type,
-            body.details,
-            body.isDefault || false,
-        );
-    }
-
-    @Delete('methods/:id')
-    @ApiOperation({ summary: 'Delete a payout method' })
-    async deletePayoutMethod(@Request() req, @Param('id') id: string) {
-        return this.withdrawalService.deletePayoutMethod(req.user.id, id);
-    }
 }

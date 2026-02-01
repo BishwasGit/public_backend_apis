@@ -259,6 +259,7 @@ model WithdrawalRequest {
   updatedAt          DateTime         @updatedAt
   paymentCompletedAt DateTime?
   paymentProof       String?
+  payoutDetails      Json? // Snapshot of payout method details
   paymentStatus      PaymentStatus    @default(PENDING)
   reviewer           User?            @relation("ReviewedWithdrawals", fields: [reviewedBy], references: [id])
   transaction        Transaction?     @relation(fields: [transactionId], references: [id])

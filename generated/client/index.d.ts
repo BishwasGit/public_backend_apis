@@ -15348,6 +15348,7 @@ export namespace Prisma {
     updatedAt: number
     paymentCompletedAt: number
     paymentProof: number
+    payoutDetails: number
     paymentStatus: number
     _all: number
   }
@@ -15409,6 +15410,7 @@ export namespace Prisma {
     updatedAt?: true
     paymentCompletedAt?: true
     paymentProof?: true
+    payoutDetails?: true
     paymentStatus?: true
     _all?: true
   }
@@ -15513,6 +15515,7 @@ export namespace Prisma {
     updatedAt: Date
     paymentCompletedAt: Date | null
     paymentProof: string | null
+    payoutDetails: JsonValue | null
     paymentStatus: $Enums.PaymentStatus
     _count: WithdrawalRequestCountAggregateOutputType | null
     _avg: WithdrawalRequestAvgAggregateOutputType | null
@@ -15549,6 +15552,7 @@ export namespace Prisma {
     updatedAt?: boolean
     paymentCompletedAt?: boolean
     paymentProof?: boolean
+    payoutDetails?: boolean
     paymentStatus?: boolean
     reviewer?: boolean | WithdrawalRequest$reviewerArgs<ExtArgs>
     transaction?: boolean | WithdrawalRequest$transactionArgs<ExtArgs>
@@ -15569,6 +15573,7 @@ export namespace Prisma {
     updatedAt?: boolean
     paymentCompletedAt?: boolean
     paymentProof?: boolean
+    payoutDetails?: boolean
     paymentStatus?: boolean
     reviewer?: boolean | WithdrawalRequest$reviewerArgs<ExtArgs>
     transaction?: boolean | WithdrawalRequest$transactionArgs<ExtArgs>
@@ -15589,6 +15594,7 @@ export namespace Prisma {
     updatedAt?: boolean
     paymentCompletedAt?: boolean
     paymentProof?: boolean
+    payoutDetails?: boolean
     paymentStatus?: boolean
   }
 
@@ -15624,6 +15630,7 @@ export namespace Prisma {
       updatedAt: Date
       paymentCompletedAt: Date | null
       paymentProof: string | null
+      payoutDetails: Prisma.JsonValue | null
       paymentStatus: $Enums.PaymentStatus
     }, ExtArgs["result"]["withdrawalRequest"]>
     composites: {}
@@ -16034,6 +16041,7 @@ export namespace Prisma {
     readonly updatedAt: FieldRef<"WithdrawalRequest", 'DateTime'>
     readonly paymentCompletedAt: FieldRef<"WithdrawalRequest", 'DateTime'>
     readonly paymentProof: FieldRef<"WithdrawalRequest", 'String'>
+    readonly payoutDetails: FieldRef<"WithdrawalRequest", 'Json'>
     readonly paymentStatus: FieldRef<"WithdrawalRequest", 'PaymentStatus'>
   }
     
@@ -25239,6 +25247,7 @@ export namespace Prisma {
     updatedAt: 'updatedAt',
     paymentCompletedAt: 'paymentCompletedAt',
     paymentProof: 'paymentProof',
+    payoutDetails: 'payoutDetails',
     paymentStatus: 'paymentStatus'
   };
 
@@ -26778,6 +26787,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"WithdrawalRequest"> | Date | string
     paymentCompletedAt?: DateTimeNullableFilter<"WithdrawalRequest"> | Date | string | null
     paymentProof?: StringNullableFilter<"WithdrawalRequest"> | string | null
+    payoutDetails?: JsonNullableFilter<"WithdrawalRequest">
     paymentStatus?: EnumPaymentStatusFilter<"WithdrawalRequest"> | $Enums.PaymentStatus
     reviewer?: XOR<UserNullableRelationFilter, UserWhereInput> | null
     transaction?: XOR<TransactionNullableRelationFilter, TransactionWhereInput> | null
@@ -26798,6 +26808,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     paymentCompletedAt?: SortOrderInput | SortOrder
     paymentProof?: SortOrderInput | SortOrder
+    payoutDetails?: SortOrderInput | SortOrder
     paymentStatus?: SortOrder
     reviewer?: UserOrderByWithRelationInput
     transaction?: TransactionOrderByWithRelationInput
@@ -26821,6 +26832,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"WithdrawalRequest"> | Date | string
     paymentCompletedAt?: DateTimeNullableFilter<"WithdrawalRequest"> | Date | string | null
     paymentProof?: StringNullableFilter<"WithdrawalRequest"> | string | null
+    payoutDetails?: JsonNullableFilter<"WithdrawalRequest">
     paymentStatus?: EnumPaymentStatusFilter<"WithdrawalRequest"> | $Enums.PaymentStatus
     reviewer?: XOR<UserNullableRelationFilter, UserWhereInput> | null
     transaction?: XOR<TransactionNullableRelationFilter, TransactionWhereInput> | null
@@ -26841,6 +26853,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     paymentCompletedAt?: SortOrderInput | SortOrder
     paymentProof?: SortOrderInput | SortOrder
+    payoutDetails?: SortOrderInput | SortOrder
     paymentStatus?: SortOrder
     _count?: WithdrawalRequestCountOrderByAggregateInput
     _avg?: WithdrawalRequestAvgOrderByAggregateInput
@@ -26866,6 +26879,7 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"WithdrawalRequest"> | Date | string
     paymentCompletedAt?: DateTimeNullableWithAggregatesFilter<"WithdrawalRequest"> | Date | string | null
     paymentProof?: StringNullableWithAggregatesFilter<"WithdrawalRequest"> | string | null
+    payoutDetails?: JsonNullableWithAggregatesFilter<"WithdrawalRequest">
     paymentStatus?: EnumPaymentStatusWithAggregatesFilter<"WithdrawalRequest"> | $Enums.PaymentStatus
   }
 
@@ -28631,6 +28645,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     paymentCompletedAt?: Date | string | null
     paymentProof?: string | null
+    payoutDetails?: NullableJsonNullValueInput | InputJsonValue
     paymentStatus?: $Enums.PaymentStatus
     reviewer?: UserCreateNestedOneWithoutReviewedWithdrawalsInput
     transaction?: TransactionCreateNestedOneWithoutWithdrawalRequestInput
@@ -28651,6 +28666,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     paymentCompletedAt?: Date | string | null
     paymentProof?: string | null
+    payoutDetails?: NullableJsonNullValueInput | InputJsonValue
     paymentStatus?: $Enums.PaymentStatus
   }
 
@@ -28665,6 +28681,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     paymentCompletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     paymentProof?: NullableStringFieldUpdateOperationsInput | string | null
+    payoutDetails?: NullableJsonNullValueInput | InputJsonValue
     paymentStatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
     reviewer?: UserUpdateOneWithoutReviewedWithdrawalsNestedInput
     transaction?: TransactionUpdateOneWithoutWithdrawalRequestNestedInput
@@ -28685,6 +28702,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     paymentCompletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     paymentProof?: NullableStringFieldUpdateOperationsInput | string | null
+    payoutDetails?: NullableJsonNullValueInput | InputJsonValue
     paymentStatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   }
 
@@ -28702,6 +28720,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     paymentCompletedAt?: Date | string | null
     paymentProof?: string | null
+    payoutDetails?: NullableJsonNullValueInput | InputJsonValue
     paymentStatus?: $Enums.PaymentStatus
   }
 
@@ -28716,6 +28735,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     paymentCompletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     paymentProof?: NullableStringFieldUpdateOperationsInput | string | null
+    payoutDetails?: NullableJsonNullValueInput | InputJsonValue
     paymentStatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   }
 
@@ -28733,6 +28753,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     paymentCompletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     paymentProof?: NullableStringFieldUpdateOperationsInput | string | null
+    payoutDetails?: NullableJsonNullValueInput | InputJsonValue
     paymentStatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   }
 
@@ -30597,6 +30618,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     paymentCompletedAt?: SortOrder
     paymentProof?: SortOrder
+    payoutDetails?: SortOrder
     paymentStatus?: SortOrder
   }
 
@@ -33720,6 +33742,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     paymentCompletedAt?: Date | string | null
     paymentProof?: string | null
+    payoutDetails?: NullableJsonNullValueInput | InputJsonValue
     paymentStatus?: $Enums.PaymentStatus
     transaction?: TransactionCreateNestedOneWithoutWithdrawalRequestInput
     user: UserCreateNestedOneWithoutWithdrawalRequestsInput
@@ -33738,6 +33761,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     paymentCompletedAt?: Date | string | null
     paymentProof?: string | null
+    payoutDetails?: NullableJsonNullValueInput | InputJsonValue
     paymentStatus?: $Enums.PaymentStatus
   }
 
@@ -33762,6 +33786,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     paymentCompletedAt?: Date | string | null
     paymentProof?: string | null
+    payoutDetails?: NullableJsonNullValueInput | InputJsonValue
     paymentStatus?: $Enums.PaymentStatus
     reviewer?: UserCreateNestedOneWithoutReviewedWithdrawalsInput
     transaction?: TransactionCreateNestedOneWithoutWithdrawalRequestInput
@@ -33780,6 +33805,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     paymentCompletedAt?: Date | string | null
     paymentProof?: string | null
+    payoutDetails?: NullableJsonNullValueInput | InputJsonValue
     paymentStatus?: $Enums.PaymentStatus
   }
 
@@ -34349,6 +34375,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"WithdrawalRequest"> | Date | string
     paymentCompletedAt?: DateTimeNullableFilter<"WithdrawalRequest"> | Date | string | null
     paymentProof?: StringNullableFilter<"WithdrawalRequest"> | string | null
+    payoutDetails?: JsonNullableFilter<"WithdrawalRequest">
     paymentStatus?: EnumPaymentStatusFilter<"WithdrawalRequest"> | $Enums.PaymentStatus
   }
 
@@ -36354,6 +36381,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     paymentCompletedAt?: Date | string | null
     paymentProof?: string | null
+    payoutDetails?: NullableJsonNullValueInput | InputJsonValue
     paymentStatus?: $Enums.PaymentStatus
     reviewer?: UserCreateNestedOneWithoutReviewedWithdrawalsInput
     user: UserCreateNestedOneWithoutWithdrawalRequestsInput
@@ -36372,6 +36400,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     paymentCompletedAt?: Date | string | null
     paymentProof?: string | null
+    payoutDetails?: NullableJsonNullValueInput | InputJsonValue
     paymentStatus?: $Enums.PaymentStatus
   }
 
@@ -36429,6 +36458,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     paymentCompletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     paymentProof?: NullableStringFieldUpdateOperationsInput | string | null
+    payoutDetails?: NullableJsonNullValueInput | InputJsonValue
     paymentStatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
     reviewer?: UserUpdateOneWithoutReviewedWithdrawalsNestedInput
     user?: UserUpdateOneRequiredWithoutWithdrawalRequestsNestedInput
@@ -36447,6 +36477,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     paymentCompletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     paymentProof?: NullableStringFieldUpdateOperationsInput | string | null
+    payoutDetails?: NullableJsonNullValueInput | InputJsonValue
     paymentStatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   }
 
@@ -40133,6 +40164,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     paymentCompletedAt?: Date | string | null
     paymentProof?: string | null
+    payoutDetails?: NullableJsonNullValueInput | InputJsonValue
     paymentStatus?: $Enums.PaymentStatus
   }
 
@@ -40149,6 +40181,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     paymentCompletedAt?: Date | string | null
     paymentProof?: string | null
+    payoutDetails?: NullableJsonNullValueInput | InputJsonValue
     paymentStatus?: $Enums.PaymentStatus
   }
 
@@ -40590,6 +40623,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     paymentCompletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     paymentProof?: NullableStringFieldUpdateOperationsInput | string | null
+    payoutDetails?: NullableJsonNullValueInput | InputJsonValue
     paymentStatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
     transaction?: TransactionUpdateOneWithoutWithdrawalRequestNestedInput
     user?: UserUpdateOneRequiredWithoutWithdrawalRequestsNestedInput
@@ -40608,6 +40642,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     paymentCompletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     paymentProof?: NullableStringFieldUpdateOperationsInput | string | null
+    payoutDetails?: NullableJsonNullValueInput | InputJsonValue
     paymentStatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   }
 
@@ -40624,6 +40659,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     paymentCompletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     paymentProof?: NullableStringFieldUpdateOperationsInput | string | null
+    payoutDetails?: NullableJsonNullValueInput | InputJsonValue
     paymentStatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   }
 
@@ -40638,6 +40674,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     paymentCompletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     paymentProof?: NullableStringFieldUpdateOperationsInput | string | null
+    payoutDetails?: NullableJsonNullValueInput | InputJsonValue
     paymentStatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
     reviewer?: UserUpdateOneWithoutReviewedWithdrawalsNestedInput
     transaction?: TransactionUpdateOneWithoutWithdrawalRequestNestedInput
@@ -40656,6 +40693,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     paymentCompletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     paymentProof?: NullableStringFieldUpdateOperationsInput | string | null
+    payoutDetails?: NullableJsonNullValueInput | InputJsonValue
     paymentStatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   }
 
@@ -40672,6 +40710,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     paymentCompletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     paymentProof?: NullableStringFieldUpdateOperationsInput | string | null
+    payoutDetails?: NullableJsonNullValueInput | InputJsonValue
     paymentStatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   }
 

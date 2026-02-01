@@ -289,6 +289,7 @@ exports.Prisma.WithdrawalRequestScalarFieldEnum = {
   updatedAt: 'updatedAt',
   paymentCompletedAt: 'paymentCompletedAt',
   paymentProof: 'paymentProof',
+  payoutDetails: 'payoutDetails',
   paymentStatus: 'paymentStatus'
 };
 
