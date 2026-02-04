@@ -531,3 +531,13 @@ enum DisputeStatus {
   REFUNDED
   DISMISSED
 }
+
+model SystemSettings {
+  id                String   @id @default(uuid())
+  commissionPercent Float    @default(10.0)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  updatedBy         String?
+
+  @@map("system_settings")
+}

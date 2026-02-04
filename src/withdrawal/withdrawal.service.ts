@@ -277,6 +277,7 @@ export class WithdrawalService {
         const updatedRequest = await this.prisma.withdrawalRequest.update({
             where: { id },
             data: {
+                status: 'COMPLETED', // Update main status too
                 paymentStatus: 'COMPLETED',
                 paymentProof,
                 paymentCompletedAt: new Date(),

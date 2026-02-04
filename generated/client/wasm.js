@@ -379,6 +379,14 @@ exports.Prisma.DisputeScalarFieldEnum = {
   resolvedBy: 'resolvedBy'
 };
 
+exports.Prisma.SystemSettingsScalarFieldEnum = {
+  id: 'id',
+  commissionPercent: 'commissionPercent',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  updatedBy: 'updatedBy'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -562,7 +570,8 @@ exports.Prisma.ModelName = {
   EventParticipants: 'EventParticipants',
   BlockedPatient: 'BlockedPatient',
   WalletTopup: 'WalletTopup',
-  Dispute: 'Dispute'
+  Dispute: 'Dispute',
+  SystemSettings: 'SystemSettings'
 };
 
 /**

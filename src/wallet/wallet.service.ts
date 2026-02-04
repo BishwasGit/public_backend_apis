@@ -1,10 +1,14 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { TransactionStatus, TransactionType } from '../../generated/client';
 import { PrismaService } from '../prisma/prisma.service';
+import { SettingsService } from '../settings/settings.service';
 
 @Injectable()
 export class WalletService {
-  constructor(private prisma: PrismaService) { }
+  constructor(
+    private prisma: PrismaService,
+    private settingsService: SettingsService,
+  ) { }
 
   async getBalance(userId: string) {
     const wallet = await this.prisma.wallet.findUnique({
@@ -71,8 +75,10 @@ export class WalletService {
 
   async processPayment(payerId: string, receiverId: string, amount: number) {
     return this.prisma.$transaction(async (tx) => {
-      const platformFee = amount * 0.1;
-      const providerEarnings = amount * 0.9;
+      // Get dynamic commission percentage
+      const commissionPercent = await this.settingsService.getCommissionPercent();
+      const platformFee = (amount * commissionPercent) / 100;
+      const providerEarnings = amount - platformFee;
 
       // 1. Deduct from Payer (Patient)
       const payerWallet = await tx.wallet.findUnique({
@@ -182,8 +188,10 @@ export class WalletService {
 
   async completePayment(payerId: string, receiverId: string, amount: number) {
     return this.prisma.$transaction(async (tx) => {
-      const platformFee = amount * 0.1;
-      const providerEarnings = amount * 0.9;
+      // Get dynamic commission percentage
+      const commissionPercent = await this.settingsService.getCommissionPercent();
+      const platformFee = (amount * commissionPercent) / 100;
+      const providerEarnings = amount - platformFee;
 
       // Funds were already reserved (deducted) from Payer.
       // We just need to credit the Provider.

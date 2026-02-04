@@ -25,6 +25,7 @@ import { UsersModule } from './users/users.module';
 import { VideoModule } from './video/video.module';
 import { WalletModule } from './wallet/wallet.module';
 import { WithdrawalModule } from './withdrawal/withdrawal.module';
+import { SettingsModule } from './settings/settings.module';
 
 import { NotificationsModule } from './notifications/notifications.module';
 
@@ -67,6 +68,7 @@ import { TranslationController } from './modules/i18n/translation.controller';
     ReportsModule,
     MessagesModule,
     CalendarModule,
+    SettingsModule,
   ],
   controllers: [AppController, LanguageController, TranslationController],
   providers: [
