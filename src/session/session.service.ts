@@ -467,9 +467,9 @@ export class SessionService {
     // Process Payment on Completion
     if (status === SessionStatus.COMPLETED && session.patientId) {
       await this.walletService.completePayment(
+        session.id, // sessionId
         session.patientId,
         session.psychologistId,
-        session.price
       );
     }
 

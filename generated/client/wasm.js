@@ -387,6 +387,15 @@ exports.Prisma.SystemSettingsScalarFieldEnum = {
   updatedBy: 'updatedBy'
 };
 
+exports.Prisma.DemoMinutesUsageScalarFieldEnum = {
+  id: 'id',
+  patientId: 'patientId',
+  psychologistId: 'psychologistId',
+  minutesUsed: 'minutesUsed',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -571,7 +580,8 @@ exports.Prisma.ModelName = {
   BlockedPatient: 'BlockedPatient',
   WalletTopup: 'WalletTopup',
   Dispute: 'Dispute',
-  SystemSettings: 'SystemSettings'
+  SystemSettings: 'SystemSettings',
+  DemoMinutesUsage: 'DemoMinutesUsage'
 };
 
 /**

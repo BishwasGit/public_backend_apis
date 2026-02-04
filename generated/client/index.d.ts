@@ -123,6 +123,11 @@ export type Dispute = $Result.DefaultSelection<Prisma.$DisputePayload>
  * 
  */
 export type SystemSettings = $Result.DefaultSelection<Prisma.$SystemSettingsPayload>
+/**
+ * Model DemoMinutesUsage
+ * 
+ */
+export type DemoMinutesUsage = $Result.DefaultSelection<Prisma.$DemoMinutesUsagePayload>
 
 /**
  * Enums
@@ -723,6 +728,16 @@ export class PrismaClient<
     * ```
     */
   get systemSettings(): Prisma.SystemSettingsDelegate<ExtArgs>;
+
+  /**
+   * `prisma.demoMinutesUsage`: Exposes CRUD operations for the **DemoMinutesUsage** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DemoMinutesUsages
+    * const demoMinutesUsages = await prisma.demoMinutesUsage.findMany()
+    * ```
+    */
+  get demoMinutesUsage(): Prisma.DemoMinutesUsageDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -1185,7 +1200,8 @@ export namespace Prisma {
     BlockedPatient: 'BlockedPatient',
     WalletTopup: 'WalletTopup',
     Dispute: 'Dispute',
-    SystemSettings: 'SystemSettings'
+    SystemSettings: 'SystemSettings',
+    DemoMinutesUsage: 'DemoMinutesUsage'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1201,7 +1217,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "user" | "mediaFolder" | "mediaFile" | "mediaUnlock" | "review" | "calendarEvent" | "serviceOption" | "wallet" | "transaction" | "session" | "auditLog" | "withdrawalRequest" | "notification" | "message" | "payoutMethod" | "language" | "translation" | "eventParticipants" | "blockedPatient" | "walletTopup" | "dispute" | "systemSettings"
+      modelProps: "user" | "mediaFolder" | "mediaFile" | "mediaUnlock" | "review" | "calendarEvent" | "serviceOption" | "wallet" | "transaction" | "session" | "auditLog" | "withdrawalRequest" | "notification" | "message" | "payoutMethod" | "language" | "translation" | "eventParticipants" | "blockedPatient" | "walletTopup" | "dispute" | "systemSettings" | "demoMinutesUsage"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2742,6 +2758,76 @@ export namespace Prisma {
           count: {
             args: Prisma.SystemSettingsCountArgs<ExtArgs>
             result: $Utils.Optional<SystemSettingsCountAggregateOutputType> | number
+          }
+        }
+      }
+      DemoMinutesUsage: {
+        payload: Prisma.$DemoMinutesUsagePayload<ExtArgs>
+        fields: Prisma.DemoMinutesUsageFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DemoMinutesUsageFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemoMinutesUsagePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DemoMinutesUsageFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemoMinutesUsagePayload>
+          }
+          findFirst: {
+            args: Prisma.DemoMinutesUsageFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemoMinutesUsagePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DemoMinutesUsageFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemoMinutesUsagePayload>
+          }
+          findMany: {
+            args: Prisma.DemoMinutesUsageFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemoMinutesUsagePayload>[]
+          }
+          create: {
+            args: Prisma.DemoMinutesUsageCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemoMinutesUsagePayload>
+          }
+          createMany: {
+            args: Prisma.DemoMinutesUsageCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DemoMinutesUsageCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemoMinutesUsagePayload>[]
+          }
+          delete: {
+            args: Prisma.DemoMinutesUsageDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemoMinutesUsagePayload>
+          }
+          update: {
+            args: Prisma.DemoMinutesUsageUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemoMinutesUsagePayload>
+          }
+          deleteMany: {
+            args: Prisma.DemoMinutesUsageDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DemoMinutesUsageUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.DemoMinutesUsageUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemoMinutesUsagePayload>
+          }
+          aggregate: {
+            args: Prisma.DemoMinutesUsageAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDemoMinutesUsage>
+          }
+          groupBy: {
+            args: Prisma.DemoMinutesUsageGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DemoMinutesUsageGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DemoMinutesUsageCountArgs<ExtArgs>
+            result: $Utils.Optional<DemoMinutesUsageCountAggregateOutputType> | number
           }
         }
       }
@@ -26032,6 +26118,930 @@ export namespace Prisma {
 
 
   /**
+   * Model DemoMinutesUsage
+   */
+
+  export type AggregateDemoMinutesUsage = {
+    _count: DemoMinutesUsageCountAggregateOutputType | null
+    _avg: DemoMinutesUsageAvgAggregateOutputType | null
+    _sum: DemoMinutesUsageSumAggregateOutputType | null
+    _min: DemoMinutesUsageMinAggregateOutputType | null
+    _max: DemoMinutesUsageMaxAggregateOutputType | null
+  }
+
+  export type DemoMinutesUsageAvgAggregateOutputType = {
+    minutesUsed: number | null
+  }
+
+  export type DemoMinutesUsageSumAggregateOutputType = {
+    minutesUsed: number | null
+  }
+
+  export type DemoMinutesUsageMinAggregateOutputType = {
+    id: string | null
+    patientId: string | null
+    psychologistId: string | null
+    minutesUsed: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type DemoMinutesUsageMaxAggregateOutputType = {
+    id: string | null
+    patientId: string | null
+    psychologistId: string | null
+    minutesUsed: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type DemoMinutesUsageCountAggregateOutputType = {
+    id: number
+    patientId: number
+    psychologistId: number
+    minutesUsed: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type DemoMinutesUsageAvgAggregateInputType = {
+    minutesUsed?: true
+  }
+
+  export type DemoMinutesUsageSumAggregateInputType = {
+    minutesUsed?: true
+  }
+
+  export type DemoMinutesUsageMinAggregateInputType = {
+    id?: true
+    patientId?: true
+    psychologistId?: true
+    minutesUsed?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type DemoMinutesUsageMaxAggregateInputType = {
+    id?: true
+    patientId?: true
+    psychologistId?: true
+    minutesUsed?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type DemoMinutesUsageCountAggregateInputType = {
+    id?: true
+    patientId?: true
+    psychologistId?: true
+    minutesUsed?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type DemoMinutesUsageAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DemoMinutesUsage to aggregate.
+     */
+    where?: DemoMinutesUsageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DemoMinutesUsages to fetch.
+     */
+    orderBy?: DemoMinutesUsageOrderByWithRelationInput | DemoMinutesUsageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DemoMinutesUsageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DemoMinutesUsages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DemoMinutesUsages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned DemoMinutesUsages
+    **/
+    _count?: true | DemoMinutesUsageCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DemoMinutesUsageAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DemoMinutesUsageSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DemoMinutesUsageMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DemoMinutesUsageMaxAggregateInputType
+  }
+
+  export type GetDemoMinutesUsageAggregateType<T extends DemoMinutesUsageAggregateArgs> = {
+        [P in keyof T & keyof AggregateDemoMinutesUsage]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDemoMinutesUsage[P]>
+      : GetScalarType<T[P], AggregateDemoMinutesUsage[P]>
+  }
+
+
+
+
+  export type DemoMinutesUsageGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DemoMinutesUsageWhereInput
+    orderBy?: DemoMinutesUsageOrderByWithAggregationInput | DemoMinutesUsageOrderByWithAggregationInput[]
+    by: DemoMinutesUsageScalarFieldEnum[] | DemoMinutesUsageScalarFieldEnum
+    having?: DemoMinutesUsageScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DemoMinutesUsageCountAggregateInputType | true
+    _avg?: DemoMinutesUsageAvgAggregateInputType
+    _sum?: DemoMinutesUsageSumAggregateInputType
+    _min?: DemoMinutesUsageMinAggregateInputType
+    _max?: DemoMinutesUsageMaxAggregateInputType
+  }
+
+  export type DemoMinutesUsageGroupByOutputType = {
+    id: string
+    patientId: string
+    psychologistId: string
+    minutesUsed: number
+    createdAt: Date
+    updatedAt: Date
+    _count: DemoMinutesUsageCountAggregateOutputType | null
+    _avg: DemoMinutesUsageAvgAggregateOutputType | null
+    _sum: DemoMinutesUsageSumAggregateOutputType | null
+    _min: DemoMinutesUsageMinAggregateOutputType | null
+    _max: DemoMinutesUsageMaxAggregateOutputType | null
+  }
+
+  type GetDemoMinutesUsageGroupByPayload<T extends DemoMinutesUsageGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DemoMinutesUsageGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DemoMinutesUsageGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DemoMinutesUsageGroupByOutputType[P]>
+            : GetScalarType<T[P], DemoMinutesUsageGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DemoMinutesUsageSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    patientId?: boolean
+    psychologistId?: boolean
+    minutesUsed?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["demoMinutesUsage"]>
+
+  export type DemoMinutesUsageSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    patientId?: boolean
+    psychologistId?: boolean
+    minutesUsed?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["demoMinutesUsage"]>
+
+  export type DemoMinutesUsageSelectScalar = {
+    id?: boolean
+    patientId?: boolean
+    psychologistId?: boolean
+    minutesUsed?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type $DemoMinutesUsagePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DemoMinutesUsage"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      patientId: string
+      psychologistId: string
+      minutesUsed: number
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["demoMinutesUsage"]>
+    composites: {}
+  }
+
+  type DemoMinutesUsageGetPayload<S extends boolean | null | undefined | DemoMinutesUsageDefaultArgs> = $Result.GetResult<Prisma.$DemoMinutesUsagePayload, S>
+
+  type DemoMinutesUsageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<DemoMinutesUsageFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: DemoMinutesUsageCountAggregateInputType | true
+    }
+
+  export interface DemoMinutesUsageDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DemoMinutesUsage'], meta: { name: 'DemoMinutesUsage' } }
+    /**
+     * Find zero or one DemoMinutesUsage that matches the filter.
+     * @param {DemoMinutesUsageFindUniqueArgs} args - Arguments to find a DemoMinutesUsage
+     * @example
+     * // Get one DemoMinutesUsage
+     * const demoMinutesUsage = await prisma.demoMinutesUsage.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DemoMinutesUsageFindUniqueArgs>(args: SelectSubset<T, DemoMinutesUsageFindUniqueArgs<ExtArgs>>): Prisma__DemoMinutesUsageClient<$Result.GetResult<Prisma.$DemoMinutesUsagePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one DemoMinutesUsage that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {DemoMinutesUsageFindUniqueOrThrowArgs} args - Arguments to find a DemoMinutesUsage
+     * @example
+     * // Get one DemoMinutesUsage
+     * const demoMinutesUsage = await prisma.demoMinutesUsage.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DemoMinutesUsageFindUniqueOrThrowArgs>(args: SelectSubset<T, DemoMinutesUsageFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DemoMinutesUsageClient<$Result.GetResult<Prisma.$DemoMinutesUsagePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first DemoMinutesUsage that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DemoMinutesUsageFindFirstArgs} args - Arguments to find a DemoMinutesUsage
+     * @example
+     * // Get one DemoMinutesUsage
+     * const demoMinutesUsage = await prisma.demoMinutesUsage.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DemoMinutesUsageFindFirstArgs>(args?: SelectSubset<T, DemoMinutesUsageFindFirstArgs<ExtArgs>>): Prisma__DemoMinutesUsageClient<$Result.GetResult<Prisma.$DemoMinutesUsagePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first DemoMinutesUsage that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DemoMinutesUsageFindFirstOrThrowArgs} args - Arguments to find a DemoMinutesUsage
+     * @example
+     * // Get one DemoMinutesUsage
+     * const demoMinutesUsage = await prisma.demoMinutesUsage.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DemoMinutesUsageFindFirstOrThrowArgs>(args?: SelectSubset<T, DemoMinutesUsageFindFirstOrThrowArgs<ExtArgs>>): Prisma__DemoMinutesUsageClient<$Result.GetResult<Prisma.$DemoMinutesUsagePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more DemoMinutesUsages that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DemoMinutesUsageFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DemoMinutesUsages
+     * const demoMinutesUsages = await prisma.demoMinutesUsage.findMany()
+     * 
+     * // Get first 10 DemoMinutesUsages
+     * const demoMinutesUsages = await prisma.demoMinutesUsage.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const demoMinutesUsageWithIdOnly = await prisma.demoMinutesUsage.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DemoMinutesUsageFindManyArgs>(args?: SelectSubset<T, DemoMinutesUsageFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DemoMinutesUsagePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a DemoMinutesUsage.
+     * @param {DemoMinutesUsageCreateArgs} args - Arguments to create a DemoMinutesUsage.
+     * @example
+     * // Create one DemoMinutesUsage
+     * const DemoMinutesUsage = await prisma.demoMinutesUsage.create({
+     *   data: {
+     *     // ... data to create a DemoMinutesUsage
+     *   }
+     * })
+     * 
+     */
+    create<T extends DemoMinutesUsageCreateArgs>(args: SelectSubset<T, DemoMinutesUsageCreateArgs<ExtArgs>>): Prisma__DemoMinutesUsageClient<$Result.GetResult<Prisma.$DemoMinutesUsagePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many DemoMinutesUsages.
+     * @param {DemoMinutesUsageCreateManyArgs} args - Arguments to create many DemoMinutesUsages.
+     * @example
+     * // Create many DemoMinutesUsages
+     * const demoMinutesUsage = await prisma.demoMinutesUsage.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DemoMinutesUsageCreateManyArgs>(args?: SelectSubset<T, DemoMinutesUsageCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many DemoMinutesUsages and returns the data saved in the database.
+     * @param {DemoMinutesUsageCreateManyAndReturnArgs} args - Arguments to create many DemoMinutesUsages.
+     * @example
+     * // Create many DemoMinutesUsages
+     * const demoMinutesUsage = await prisma.demoMinutesUsage.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many DemoMinutesUsages and only return the `id`
+     * const demoMinutesUsageWithIdOnly = await prisma.demoMinutesUsage.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DemoMinutesUsageCreateManyAndReturnArgs>(args?: SelectSubset<T, DemoMinutesUsageCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DemoMinutesUsagePayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a DemoMinutesUsage.
+     * @param {DemoMinutesUsageDeleteArgs} args - Arguments to delete one DemoMinutesUsage.
+     * @example
+     * // Delete one DemoMinutesUsage
+     * const DemoMinutesUsage = await prisma.demoMinutesUsage.delete({
+     *   where: {
+     *     // ... filter to delete one DemoMinutesUsage
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DemoMinutesUsageDeleteArgs>(args: SelectSubset<T, DemoMinutesUsageDeleteArgs<ExtArgs>>): Prisma__DemoMinutesUsageClient<$Result.GetResult<Prisma.$DemoMinutesUsagePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one DemoMinutesUsage.
+     * @param {DemoMinutesUsageUpdateArgs} args - Arguments to update one DemoMinutesUsage.
+     * @example
+     * // Update one DemoMinutesUsage
+     * const demoMinutesUsage = await prisma.demoMinutesUsage.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DemoMinutesUsageUpdateArgs>(args: SelectSubset<T, DemoMinutesUsageUpdateArgs<ExtArgs>>): Prisma__DemoMinutesUsageClient<$Result.GetResult<Prisma.$DemoMinutesUsagePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more DemoMinutesUsages.
+     * @param {DemoMinutesUsageDeleteManyArgs} args - Arguments to filter DemoMinutesUsages to delete.
+     * @example
+     * // Delete a few DemoMinutesUsages
+     * const { count } = await prisma.demoMinutesUsage.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DemoMinutesUsageDeleteManyArgs>(args?: SelectSubset<T, DemoMinutesUsageDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DemoMinutesUsages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DemoMinutesUsageUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DemoMinutesUsages
+     * const demoMinutesUsage = await prisma.demoMinutesUsage.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DemoMinutesUsageUpdateManyArgs>(args: SelectSubset<T, DemoMinutesUsageUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one DemoMinutesUsage.
+     * @param {DemoMinutesUsageUpsertArgs} args - Arguments to update or create a DemoMinutesUsage.
+     * @example
+     * // Update or create a DemoMinutesUsage
+     * const demoMinutesUsage = await prisma.demoMinutesUsage.upsert({
+     *   create: {
+     *     // ... data to create a DemoMinutesUsage
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DemoMinutesUsage we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DemoMinutesUsageUpsertArgs>(args: SelectSubset<T, DemoMinutesUsageUpsertArgs<ExtArgs>>): Prisma__DemoMinutesUsageClient<$Result.GetResult<Prisma.$DemoMinutesUsagePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of DemoMinutesUsages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DemoMinutesUsageCountArgs} args - Arguments to filter DemoMinutesUsages to count.
+     * @example
+     * // Count the number of DemoMinutesUsages
+     * const count = await prisma.demoMinutesUsage.count({
+     *   where: {
+     *     // ... the filter for the DemoMinutesUsages we want to count
+     *   }
+     * })
+    **/
+    count<T extends DemoMinutesUsageCountArgs>(
+      args?: Subset<T, DemoMinutesUsageCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DemoMinutesUsageCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DemoMinutesUsage.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DemoMinutesUsageAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DemoMinutesUsageAggregateArgs>(args: Subset<T, DemoMinutesUsageAggregateArgs>): Prisma.PrismaPromise<GetDemoMinutesUsageAggregateType<T>>
+
+    /**
+     * Group by DemoMinutesUsage.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DemoMinutesUsageGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DemoMinutesUsageGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DemoMinutesUsageGroupByArgs['orderBy'] }
+        : { orderBy?: DemoMinutesUsageGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DemoMinutesUsageGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDemoMinutesUsageGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the DemoMinutesUsage model
+   */
+  readonly fields: DemoMinutesUsageFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DemoMinutesUsage.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DemoMinutesUsageClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the DemoMinutesUsage model
+   */ 
+  interface DemoMinutesUsageFieldRefs {
+    readonly id: FieldRef<"DemoMinutesUsage", 'String'>
+    readonly patientId: FieldRef<"DemoMinutesUsage", 'String'>
+    readonly psychologistId: FieldRef<"DemoMinutesUsage", 'String'>
+    readonly minutesUsed: FieldRef<"DemoMinutesUsage", 'Float'>
+    readonly createdAt: FieldRef<"DemoMinutesUsage", 'DateTime'>
+    readonly updatedAt: FieldRef<"DemoMinutesUsage", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * DemoMinutesUsage findUnique
+   */
+  export type DemoMinutesUsageFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemoMinutesUsage
+     */
+    select?: DemoMinutesUsageSelect<ExtArgs> | null
+    /**
+     * Filter, which DemoMinutesUsage to fetch.
+     */
+    where: DemoMinutesUsageWhereUniqueInput
+  }
+
+  /**
+   * DemoMinutesUsage findUniqueOrThrow
+   */
+  export type DemoMinutesUsageFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemoMinutesUsage
+     */
+    select?: DemoMinutesUsageSelect<ExtArgs> | null
+    /**
+     * Filter, which DemoMinutesUsage to fetch.
+     */
+    where: DemoMinutesUsageWhereUniqueInput
+  }
+
+  /**
+   * DemoMinutesUsage findFirst
+   */
+  export type DemoMinutesUsageFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemoMinutesUsage
+     */
+    select?: DemoMinutesUsageSelect<ExtArgs> | null
+    /**
+     * Filter, which DemoMinutesUsage to fetch.
+     */
+    where?: DemoMinutesUsageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DemoMinutesUsages to fetch.
+     */
+    orderBy?: DemoMinutesUsageOrderByWithRelationInput | DemoMinutesUsageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DemoMinutesUsages.
+     */
+    cursor?: DemoMinutesUsageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DemoMinutesUsages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DemoMinutesUsages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DemoMinutesUsages.
+     */
+    distinct?: DemoMinutesUsageScalarFieldEnum | DemoMinutesUsageScalarFieldEnum[]
+  }
+
+  /**
+   * DemoMinutesUsage findFirstOrThrow
+   */
+  export type DemoMinutesUsageFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemoMinutesUsage
+     */
+    select?: DemoMinutesUsageSelect<ExtArgs> | null
+    /**
+     * Filter, which DemoMinutesUsage to fetch.
+     */
+    where?: DemoMinutesUsageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DemoMinutesUsages to fetch.
+     */
+    orderBy?: DemoMinutesUsageOrderByWithRelationInput | DemoMinutesUsageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DemoMinutesUsages.
+     */
+    cursor?: DemoMinutesUsageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DemoMinutesUsages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DemoMinutesUsages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DemoMinutesUsages.
+     */
+    distinct?: DemoMinutesUsageScalarFieldEnum | DemoMinutesUsageScalarFieldEnum[]
+  }
+
+  /**
+   * DemoMinutesUsage findMany
+   */
+  export type DemoMinutesUsageFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemoMinutesUsage
+     */
+    select?: DemoMinutesUsageSelect<ExtArgs> | null
+    /**
+     * Filter, which DemoMinutesUsages to fetch.
+     */
+    where?: DemoMinutesUsageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DemoMinutesUsages to fetch.
+     */
+    orderBy?: DemoMinutesUsageOrderByWithRelationInput | DemoMinutesUsageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing DemoMinutesUsages.
+     */
+    cursor?: DemoMinutesUsageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DemoMinutesUsages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DemoMinutesUsages.
+     */
+    skip?: number
+    distinct?: DemoMinutesUsageScalarFieldEnum | DemoMinutesUsageScalarFieldEnum[]
+  }
+
+  /**
+   * DemoMinutesUsage create
+   */
+  export type DemoMinutesUsageCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemoMinutesUsage
+     */
+    select?: DemoMinutesUsageSelect<ExtArgs> | null
+    /**
+     * The data needed to create a DemoMinutesUsage.
+     */
+    data: XOR<DemoMinutesUsageCreateInput, DemoMinutesUsageUncheckedCreateInput>
+  }
+
+  /**
+   * DemoMinutesUsage createMany
+   */
+  export type DemoMinutesUsageCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many DemoMinutesUsages.
+     */
+    data: DemoMinutesUsageCreateManyInput | DemoMinutesUsageCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DemoMinutesUsage createManyAndReturn
+   */
+  export type DemoMinutesUsageCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemoMinutesUsage
+     */
+    select?: DemoMinutesUsageSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many DemoMinutesUsages.
+     */
+    data: DemoMinutesUsageCreateManyInput | DemoMinutesUsageCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DemoMinutesUsage update
+   */
+  export type DemoMinutesUsageUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemoMinutesUsage
+     */
+    select?: DemoMinutesUsageSelect<ExtArgs> | null
+    /**
+     * The data needed to update a DemoMinutesUsage.
+     */
+    data: XOR<DemoMinutesUsageUpdateInput, DemoMinutesUsageUncheckedUpdateInput>
+    /**
+     * Choose, which DemoMinutesUsage to update.
+     */
+    where: DemoMinutesUsageWhereUniqueInput
+  }
+
+  /**
+   * DemoMinutesUsage updateMany
+   */
+  export type DemoMinutesUsageUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update DemoMinutesUsages.
+     */
+    data: XOR<DemoMinutesUsageUpdateManyMutationInput, DemoMinutesUsageUncheckedUpdateManyInput>
+    /**
+     * Filter which DemoMinutesUsages to update
+     */
+    where?: DemoMinutesUsageWhereInput
+  }
+
+  /**
+   * DemoMinutesUsage upsert
+   */
+  export type DemoMinutesUsageUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemoMinutesUsage
+     */
+    select?: DemoMinutesUsageSelect<ExtArgs> | null
+    /**
+     * The filter to search for the DemoMinutesUsage to update in case it exists.
+     */
+    where: DemoMinutesUsageWhereUniqueInput
+    /**
+     * In case the DemoMinutesUsage found by the `where` argument doesn't exist, create a new DemoMinutesUsage with this data.
+     */
+    create: XOR<DemoMinutesUsageCreateInput, DemoMinutesUsageUncheckedCreateInput>
+    /**
+     * In case the DemoMinutesUsage was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DemoMinutesUsageUpdateInput, DemoMinutesUsageUncheckedUpdateInput>
+  }
+
+  /**
+   * DemoMinutesUsage delete
+   */
+  export type DemoMinutesUsageDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemoMinutesUsage
+     */
+    select?: DemoMinutesUsageSelect<ExtArgs> | null
+    /**
+     * Filter which DemoMinutesUsage to delete.
+     */
+    where: DemoMinutesUsageWhereUniqueInput
+  }
+
+  /**
+   * DemoMinutesUsage deleteMany
+   */
+  export type DemoMinutesUsageDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DemoMinutesUsages to delete
+     */
+    where?: DemoMinutesUsageWhereInput
+  }
+
+  /**
+   * DemoMinutesUsage without action
+   */
+  export type DemoMinutesUsageDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemoMinutesUsage
+     */
+    select?: DemoMinutesUsageSelect<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -26374,6 +27384,18 @@ export namespace Prisma {
   };
 
   export type SystemSettingsScalarFieldEnum = (typeof SystemSettingsScalarFieldEnum)[keyof typeof SystemSettingsScalarFieldEnum]
+
+
+  export const DemoMinutesUsageScalarFieldEnum: {
+    id: 'id',
+    patientId: 'patientId',
+    psychologistId: 'psychologistId',
+    minutesUsed: 'minutesUsed',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type DemoMinutesUsageScalarFieldEnum = (typeof DemoMinutesUsageScalarFieldEnum)[keyof typeof DemoMinutesUsageScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -28527,6 +29549,66 @@ export namespace Prisma {
     updatedBy?: StringNullableWithAggregatesFilter<"SystemSettings"> | string | null
   }
 
+  export type DemoMinutesUsageWhereInput = {
+    AND?: DemoMinutesUsageWhereInput | DemoMinutesUsageWhereInput[]
+    OR?: DemoMinutesUsageWhereInput[]
+    NOT?: DemoMinutesUsageWhereInput | DemoMinutesUsageWhereInput[]
+    id?: StringFilter<"DemoMinutesUsage"> | string
+    patientId?: StringFilter<"DemoMinutesUsage"> | string
+    psychologistId?: StringFilter<"DemoMinutesUsage"> | string
+    minutesUsed?: FloatFilter<"DemoMinutesUsage"> | number
+    createdAt?: DateTimeFilter<"DemoMinutesUsage"> | Date | string
+    updatedAt?: DateTimeFilter<"DemoMinutesUsage"> | Date | string
+  }
+
+  export type DemoMinutesUsageOrderByWithRelationInput = {
+    id?: SortOrder
+    patientId?: SortOrder
+    psychologistId?: SortOrder
+    minutesUsed?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DemoMinutesUsageWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    patientId_psychologistId?: DemoMinutesUsagePatientIdPsychologistIdCompoundUniqueInput
+    AND?: DemoMinutesUsageWhereInput | DemoMinutesUsageWhereInput[]
+    OR?: DemoMinutesUsageWhereInput[]
+    NOT?: DemoMinutesUsageWhereInput | DemoMinutesUsageWhereInput[]
+    patientId?: StringFilter<"DemoMinutesUsage"> | string
+    psychologistId?: StringFilter<"DemoMinutesUsage"> | string
+    minutesUsed?: FloatFilter<"DemoMinutesUsage"> | number
+    createdAt?: DateTimeFilter<"DemoMinutesUsage"> | Date | string
+    updatedAt?: DateTimeFilter<"DemoMinutesUsage"> | Date | string
+  }, "id" | "patientId_psychologistId">
+
+  export type DemoMinutesUsageOrderByWithAggregationInput = {
+    id?: SortOrder
+    patientId?: SortOrder
+    psychologistId?: SortOrder
+    minutesUsed?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: DemoMinutesUsageCountOrderByAggregateInput
+    _avg?: DemoMinutesUsageAvgOrderByAggregateInput
+    _max?: DemoMinutesUsageMaxOrderByAggregateInput
+    _min?: DemoMinutesUsageMinOrderByAggregateInput
+    _sum?: DemoMinutesUsageSumOrderByAggregateInput
+  }
+
+  export type DemoMinutesUsageScalarWhereWithAggregatesInput = {
+    AND?: DemoMinutesUsageScalarWhereWithAggregatesInput | DemoMinutesUsageScalarWhereWithAggregatesInput[]
+    OR?: DemoMinutesUsageScalarWhereWithAggregatesInput[]
+    NOT?: DemoMinutesUsageScalarWhereWithAggregatesInput | DemoMinutesUsageScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"DemoMinutesUsage"> | string
+    patientId?: StringWithAggregatesFilter<"DemoMinutesUsage"> | string
+    psychologistId?: StringWithAggregatesFilter<"DemoMinutesUsage"> | string
+    minutesUsed?: FloatWithAggregatesFilter<"DemoMinutesUsage"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"DemoMinutesUsage"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"DemoMinutesUsage"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     alias: string
@@ -30472,6 +31554,69 @@ export namespace Prisma {
     updatedBy?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type DemoMinutesUsageCreateInput = {
+    id?: string
+    patientId: string
+    psychologistId: string
+    minutesUsed?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DemoMinutesUsageUncheckedCreateInput = {
+    id?: string
+    patientId: string
+    psychologistId: string
+    minutesUsed?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DemoMinutesUsageUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    patientId?: StringFieldUpdateOperationsInput | string
+    psychologistId?: StringFieldUpdateOperationsInput | string
+    minutesUsed?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DemoMinutesUsageUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    patientId?: StringFieldUpdateOperationsInput | string
+    psychologistId?: StringFieldUpdateOperationsInput | string
+    minutesUsed?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DemoMinutesUsageCreateManyInput = {
+    id?: string
+    patientId: string
+    psychologistId: string
+    minutesUsed?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DemoMinutesUsageUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    patientId?: StringFieldUpdateOperationsInput | string
+    psychologistId?: StringFieldUpdateOperationsInput | string
+    minutesUsed?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DemoMinutesUsageUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    patientId?: StringFieldUpdateOperationsInput | string
+    psychologistId?: StringFieldUpdateOperationsInput | string
+    minutesUsed?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -32255,6 +33400,46 @@ export namespace Prisma {
 
   export type SystemSettingsSumOrderByAggregateInput = {
     commissionPercent?: SortOrder
+  }
+
+  export type DemoMinutesUsagePatientIdPsychologistIdCompoundUniqueInput = {
+    patientId: string
+    psychologistId: string
+  }
+
+  export type DemoMinutesUsageCountOrderByAggregateInput = {
+    id?: SortOrder
+    patientId?: SortOrder
+    psychologistId?: SortOrder
+    minutesUsed?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DemoMinutesUsageAvgOrderByAggregateInput = {
+    minutesUsed?: SortOrder
+  }
+
+  export type DemoMinutesUsageMaxOrderByAggregateInput = {
+    id?: SortOrder
+    patientId?: SortOrder
+    psychologistId?: SortOrder
+    minutesUsed?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DemoMinutesUsageMinOrderByAggregateInput = {
+    id?: SortOrder
+    patientId?: SortOrder
+    psychologistId?: SortOrder
+    minutesUsed?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DemoMinutesUsageSumOrderByAggregateInput = {
+    minutesUsed?: SortOrder
   }
 
   export type AuditLogCreateNestedManyWithoutUserInput = {
@@ -42634,6 +43819,10 @@ export namespace Prisma {
      * @deprecated Use SystemSettingsDefaultArgs instead
      */
     export type SystemSettingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = SystemSettingsDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use DemoMinutesUsageDefaultArgs instead
+     */
+    export type DemoMinutesUsageArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = DemoMinutesUsageDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

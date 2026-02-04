@@ -59,7 +59,8 @@ export class ProfileService {
       status: user.status,
       reviews,
       averageRating,
-      reviewCount: reviews.length
+      reviewCount: reviews.length,
+      demoMinutes: user.demoMinutes
     };
   }
 
@@ -106,7 +107,7 @@ export class ProfileService {
   async updateProfile(userId: string, data: any) {
     // Build update object with only defined values
     const updateData: any = {};
-    
+
     if (data.alias !== undefined) updateData.alias = data.alias;
     if (data.email !== undefined) updateData.email = data.email;
     if (data.phoneNumber !== undefined) updateData.phoneNumber = data.phoneNumber;
@@ -121,7 +122,8 @@ export class ProfileService {
     if (data.isProfileVisible !== undefined) updateData.isProfileVisible = data.isProfileVisible;
     if (data.status !== undefined) updateData.status = data.status;
     if (data.sexualOrientation !== undefined) updateData.sexualOrientation = data.sexualOrientation;
-    
+    if (data.demoMinutes !== undefined) updateData.demoMinutes = data.demoMinutes;
+
     return this.prisma.user.update({
       where: { id: userId },
       data: updateData,

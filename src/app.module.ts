@@ -10,6 +10,7 @@ import { AppService } from './app.service';
 import { AuditModule } from './audit/audit.module';
 import { AuthModule } from './auth/auth.module';
 import { DisputesModule } from './disputes/disputes.module';
+import { DemoMinutesModule } from './demo-minutes/demo-minutes.module';
 import { BlockedPatientModule } from './blocked-patient/blocked-patient.module';
 import { CalendarModule } from './calendar/calendar.module';
 import { EncryptionService } from './common/encryption/encryption.service';
@@ -69,6 +70,7 @@ import { TranslationController } from './modules/i18n/translation.controller';
     MessagesModule,
     CalendarModule,
     SettingsModule,
+    DemoMinutesModule,
   ],
   controllers: [AppController, LanguageController, TranslationController],
   providers: [

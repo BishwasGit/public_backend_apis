@@ -1,15 +1,15 @@
 import {
-    BadRequestException,
-    Body,
-    Controller,
-    Get,
-    Param,
-    Patch,
-    Post,
-    Request,
-    UploadedFile,
-    UseGuards,
-    UseInterceptors,
+  BadRequestException,
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Request,
+  UploadedFile,
+  UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
@@ -59,7 +59,7 @@ export class ProfileController {
       'experience', 'education', 'price', 'hourlyRate',
       'email', 'phoneNumber', 'gender', 'dateOfBirth',
       'notificationPreferences', 'theme', 'sessionTimeout', 'status',
-      'isProfileVisible', 'sexualOrientation'
+      'isProfileVisible', 'sexualOrientation', 'demoMinutes'
     ];
 
     const filteredBody = Object.keys(body)

@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Post,
+  Query,
   Request,
   UseGuards,
 } from '@nestjs/common';
@@ -49,8 +50,8 @@ export class WalletController {
   @Get('transactions')
   @ApiOperation({ summary: 'Get transaction history' })
   @ApiResponse({ status: 200, description: 'Transactions returned successfully' })
-  getTransactions(@Request() req) {
-    return this.walletService.getTransactions(req.user.id);
+  getTransactions(@Request() req, @Query('referenceId') referenceId?: string) {
+    return this.walletService.getTransactions(req.user.id, referenceId);
   }
 
   @Post('withdraw')
