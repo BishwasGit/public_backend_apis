@@ -40,6 +40,19 @@ export class ProfileService {
       throw new NotFoundException('Psychologist not found');
     }
 
+    if (!user.isProfileVisible) {
+      // Optional: Allow direct link if needed, or block it. 
+      // For now, let's treat it as not found for privacy, 
+      // unless specific requirement says otherwise.
+      // But wait, user might be sharing link manually?
+      // Let's stick to Search Filtering only for now as per plan "filter out users".
+      // If direct link should work, we don't throw here.
+      // Re-reading plan: "Enable psychologists to hide their profile from public search results and listings"
+      // It implies unlisted status. Direct link usually stays working or becomes private.
+      // Implementation Plan: "Filter invisible psychologists from search results" - checked.
+      // Let's leave getPublicProfile accessible if known via ID (Unlisted mode).
+    }
+
     const reviews = user.receivedReviews || [];
     const averageRating = reviews.length > 0
       ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length
@@ -60,7 +73,8 @@ export class ProfileService {
       reviews,
       averageRating,
       reviewCount: reviews.length,
-      demoMinutes: user.demoMinutes
+      demoMinutes: user.demoMinutes,
+      isProfileVisible: user.isProfileVisible
     };
   }
 
@@ -149,6 +163,7 @@ export class ProfileService {
     return this.prisma.user.findMany({
       where: {
         role: 'PSYCHOLOGIST',
+        isProfileVisible: true,
         serviceOptions: {
           some: {
             isEnabled: true,
